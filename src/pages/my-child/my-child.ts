@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  NavController, NavParams } from 'ionic-angular';
+import {  NavController, NavParams ,MenuController} from 'ionic-angular';
 import {LoginPage} from'../login/login';
 import {ChildDetailsPage} from'../child-details/child-details';
 /**
@@ -14,7 +14,8 @@ import {ChildDetailsPage} from'../child-details/child-details';
 })
 export class MyChildPage {
 children:Array<string>=[]
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController) {
+    //this.menuCtrl.enable(true, 'myMenu');
     this.children=["Child1","Child2","Child3","Child4"];
   }
 
@@ -27,5 +28,10 @@ children:Array<string>=[]
       this.navCtrl.push(ChildDetailsPage, {
       item: item
   });
-  } 
+} 
+//
+openMenu() {
+   this.menuCtrl.enable(true, 'myMenu');
+ }
+
 }

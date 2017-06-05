@@ -15,6 +15,9 @@ import {  AddSchedulePage} from '../pages/add-schedule/add-schedule';
 import { EditSchedulePage } from '../pages/edit-schedule/edit-schedule';
 import { RemoveSchedulePage } from '../pages/remove-schedule/remove-schedule';
 import {  StatisticsPage} from '../pages/statistics/statistics';
+import { AddChildPage } from '../pages/add-child/add-child';
+import { AddLocationPage } from '../pages/add-location/add-location';
+import { MyLocationsPage } from '../pages/my-locations/my-locations';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -33,7 +36,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddSchedulePage,
     EditSchedulePage,
     RemoveSchedulePage,
-    StatisticsPage
+    StatisticsPage,
+    AddChildPage,
+    AddLocationPage,
+    MyLocationsPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddSchedulePage,
     EditSchedulePage,
     RemoveSchedulePage,
-    StatisticsPage
+    StatisticsPage,
+    AddChildPage,
+    AddLocationPage,
+    MyLocationsPage
   ],
   providers: [
     StatusBar,
