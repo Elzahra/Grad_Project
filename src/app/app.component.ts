@@ -11,7 +11,7 @@ import { ListPage } from '../pages/list/list';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  x:number=1;
   rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
