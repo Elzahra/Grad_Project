@@ -14,7 +14,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   x:number=1;
   rootPage: any = HomePage;
-
+  //Zima was here
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
