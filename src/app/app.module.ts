@@ -18,6 +18,7 @@ import {  StatisticsPage} from '../pages/statistics/statistics';
 import { AddChildPage } from '../pages/add-child/add-child';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { MyLocationsPage } from '../pages/my-locations/my-locations';
+import { ChildMapPage } from '../pages/child-map/child-map';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -39,7 +40,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     StatisticsPage,
     AddChildPage,
     AddLocationPage,
-    MyLocationsPage
+    MyLocationsPage,
+    ChildMapPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     StatisticsPage,
     AddChildPage,
     AddLocationPage,
-    MyLocationsPage
+    MyLocationsPage,
+    ChildMapPage
   ],
   providers: [
     StatusBar,

@@ -6,25 +6,22 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Schedules</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Schedules</ion-title>
+    </ion-navbar>
+    <ion-toolbar color="light">
+        <ion-title>{{schedule.item}}</ion-title>
+        <ion-buttons end>
+                <button ion-button  color="primary" (click)="AddSchedule()"> <ion-icon name="add"></ion-icon>  </button>
+                <button ion-button  color="secondary" (click)="EditSchedule()"> <ion-icon ios="ios-brush" md="md-brush"></ion-icon> </button>
+                <button ion-button  color="danger" (click)="RemoveSchedule()"> <ion-icon name="trash"></ion-icon> </button>
 
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
- <ion-grid>
-        <ion-row>
-            <ion-col>
-                <button ion-button round color="primary" (click)="AddSchedule()"> <ion-icon name="add"></ion-icon>  </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button round color="secondary" (click)="EditSchedule()"> <ion-icon name="brush"></ion-icon> </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button round color="danger" (click)="RemoveSchedule()"> <ion-icon name="trash"></ion-icon> </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+
+    <h2> {{schedule.item}}</h2>
 </ion-content>

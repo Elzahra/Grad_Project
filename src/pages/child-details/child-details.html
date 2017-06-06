@@ -6,31 +6,25 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Child-Details</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-title>Child Name</ion-title>
+        <ion-buttons end>
+                <button ion-button (click)="removeChild()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+            <button ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+
+        </ion-buttons>
+    </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
- <ion-grid>
-        <ion-row>
-            <ion-col>
-                <h1>child name</h1>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <h1>statstics</h1>
-                <button ion-button full color="primary" (click)="GoToStatistics()"> Statistics </button>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-              <h1>Schudule</h1>
-                <button ion-button full color="secondary" (click)="GoToSchedule()"> Set Schedule </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+<ion-tabs>
+  <ion-tab tabTitle="Map" [root]="childMonTab" [rootParams]="team" tabIcon="map"></ion-tab>
+  <ion-tab tabTitle="Statistics" [root]="statisticsTab" [rootParams]="team" tabIcon="podium"></ion-tab>
+  <ion-tab tabTitle="Shecdual" [root]="shecdualTab" [rootParams]="team" tabIcon="plane"></ion-tab>
+
+</ion-tabs>

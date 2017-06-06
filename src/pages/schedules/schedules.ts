@@ -14,9 +14,11 @@ import {RemoveSchedulePage} from '../remove-schedule/remove-schedule';
   templateUrl: 'schedules.html',
 })
 export class SchedulesPage {
-
+schedule:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  this.schedule=this.navParams.data;
+  console.log(this.navParams.data);
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SchedulesPage');

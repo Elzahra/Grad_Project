@@ -15,7 +15,7 @@
 
 <ion-content padding>
 <ion-list>
-    <button ion-item *ngFor="let schedule of schedules" (click)="Itemschedule($event, item)">
+    <button ion-item *ngFor="let schedule of schedules" (click)="Itemschedule($event, schedule)">
       {{schedule}}
     </button>
   </ion-list>

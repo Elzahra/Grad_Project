@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {  NavController, NavParams,MenuController } from 'ionic-angular';
 import { MyChildPage} from '../my-child/my-child';
-
+import { MyApp } from '../../app/app.component';
 /**
  * Generated class for the LoginPage page.
  *
@@ -14,7 +14,7 @@ import { MyChildPage} from '../my-child/my-child';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     //this.menuCtrl.enable(false, 'myMenu');
   }
 
@@ -24,7 +24,8 @@ export class LoginPage {
   //
   GoToMychild()
   {
-    this.navCtrl.push(MyChildPage);
+    this.navCtrl.setRoot(MyChildPage);
+    this.navCtrl.popToRoot();
   }
 
 }
