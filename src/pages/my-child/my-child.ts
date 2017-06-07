@@ -13,10 +13,11 @@ import {ChildDetailsPage} from'../child-details/child-details';
   templateUrl: 'my-child.html',
 })
 export class MyChildPage {
-children:Array<string>=[]
+children:Array<any>=[];
   constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController) {
     //this.menuCtrl.enable(true, 'myMenu');
-    this.children=["Child1","Child2","Child3","Child4"];
+    this.children= this.navParams.data.childs;
+    console.log(this.navParams.data);
   }
 
   ionViewDidLoad() {

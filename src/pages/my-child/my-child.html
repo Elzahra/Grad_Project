@@ -6,6 +6,9 @@
 
 (click)="openMenu()"
 -->
+
+
+
 <ion-nav swipeBackEnabled="false"></ion-nav>
 
 <ion-header>
@@ -25,7 +28,7 @@
 <ion-content padding>
  <ion-list>
     <button ion-item *ngFor="let child of children"  (click)="ItemChild($event, item)">
-      {{child}}
+      {{child.fname}}
     </button>
   </ion-list>
 </ion-content>
