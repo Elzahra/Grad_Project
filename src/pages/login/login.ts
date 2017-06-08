@@ -52,8 +52,13 @@ export class LoginPage {
       this.trackApi.getParents().subscribe(data => {
         this.parents = data;
 <<<<<<< HEAD
+<<<<<<< HEAD
             this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
                   
+=======
+        this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
+
+>>>>>>> 06cc38bbae04aea63bbd727ebe418d3ca50f67dc
 =======
         this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
 
