@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import { MyChildPage } from '../my-child/my-child';
-import { MyApp } from '../../app/app.component';
+
 import { TrackApi } from '../shared/track-api.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -43,9 +43,11 @@ export class LoginPage {
   //
   GoToMychild() {
     let email = this.loginForm.value.email;
-    let pass = this.loginForm.value.pass;
+    let pass = this.loginForm.value.password;
+    console.log(email+" - "+pass)
     let loader = this.loadingCtrl.create({
-      content: 'Logging In...'
+      content: 'Logging In...',
+      duration:5000
     });
 
     loader.present().then(() => {
@@ -60,7 +62,7 @@ export class LoginPage {
           loader.dismiss();
         }
         else {
-          this.msg = "Incorrect data";
+          this.msg = "Wrong Email Or Password";
           loader.dismiss();
 
         }
@@ -69,7 +71,10 @@ export class LoginPage {
       })
     })
 
-
+// loader.onDidDismiss(()=>{
+//    this.msg = "Connection TimeOut Try Again Later.";
+  
+// })
 
   }
 
