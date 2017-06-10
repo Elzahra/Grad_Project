@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import { MyChildPage } from '../my-child/my-child';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 
 import { TrackApi, IParent } from '../shared/track-api.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -28,7 +28,7 @@ export class LoginPage {
     private trackApi: TrackApi,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
-    private store: Storage,
+    //private store: Storage,
     private menuCtrl: MenuController
   ) {
     this.menuCtrl.swipeEnable(false);
@@ -60,7 +60,7 @@ export class LoginPage {
         this.parents = data;
         this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
         if (this.selectedParent != undefined) {
-          this.store.set('userId', this.selectedParent.id);
+          //this.store.set('userId', this.selectedParent.id);
           this.navCtrl.setRoot(MyChildPage);
           this.navCtrl.push(MyChildPage, this.selectedParent);
           // loader.dismiss();
@@ -72,13 +72,10 @@ export class LoginPage {
       })
     })
 
-<<<<<<< HEAD
 // loader.onDidDismiss(()=>{
 //    this.msg = "Connection TimeOut Try Again Later.";
 // })
-=======
 
->>>>>>> a65a458c9e47dacadcd5b03c2981e1353bd2bb45
 
   }
 

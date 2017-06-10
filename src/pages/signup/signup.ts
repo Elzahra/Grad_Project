@@ -20,7 +20,6 @@ import { TrackApi } from '../shared/track-api.service'
 })
 //
 export class SignupPage {
-<<<<<<< HEAD
 //
  private imageSrc: string;
  SignupForm:FormGroup;
