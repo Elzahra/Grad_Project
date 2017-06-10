@@ -1,18 +1,47 @@
-<!--
-  Generated template for the SignupPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Signup</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+<<<<<<< HEAD
+  <ion-row>     
+          <button ion-button (click)="openGallery()" round ><ion-icon name="images"></ion-icon></button>
+          <!--  <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>-->     
+  </ion-row>
+  <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
+    <ion-grid>
+      <ion-row>
+        <ion-input type="text" placeholder="First Name" #fname formControlName="fname" ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input type="text" placeholder="Last Name" #lname formControlName="lname" ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input type="password" placeholder="Password" #password formControlName="password" ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input type="text" placeholder="Telephone" #telephone formControlName="telephone" ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input type="text" placeholder="Address" #address formControlName="address" ></ion-input>
+      </ion-row>      
+      <br/>
+      <br/>
+      <ion-row>
+        <button ion-button full color="danger" type="submit" [disabled]="!SignupForm.valid"> SignUp </button>
+      </ion-row>
+      <ion-row>
+        <label class="mesg">{{msg}}</label>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+=======
 <button ion-button (click)="doWork()">Insert</button>
 </ion-content>
+>>>>>>> a65a458c9e47dacadcd5b03c2981e1353bd2bb45
