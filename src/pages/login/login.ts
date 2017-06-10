@@ -62,16 +62,12 @@ export class LoginPage {
         else {
           this.msg = "Wrong Email Or Password";
           loader.dismiss();
-
         }
-
-
       })
     })
 
 // loader.onDidDismiss(()=>{
 //    this.msg = "Connection TimeOut Try Again Later.";
-  
 // })
 
   }

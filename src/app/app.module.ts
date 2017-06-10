@@ -6,6 +6,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { TrackApi } from '../pages/shared/track-api.service'
 
+import {Camera} from '@ionic-native/camera';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -23,6 +25,8 @@ import { AddChildPage } from '../pages/add-child/add-child';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { MyLocationsPage } from '../pages/my-locations/my-locations';
 import { ChildMapPage } from '../pages/child-map/child-map';
+import { GalleryPage } from '../pages/gallery/gallery';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -45,7 +49,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddChildPage,
     AddLocationPage,
     MyLocationsPage,
-    ChildMapPage
+    ChildMapPage,
+    GalleryPage
   ],
   imports: [
     BrowserModule,
@@ -70,12 +75,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddChildPage,
     AddLocationPage,
     MyLocationsPage,
-    ChildMapPage
+    ChildMapPage,
+    GalleryPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     TrackApi,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
