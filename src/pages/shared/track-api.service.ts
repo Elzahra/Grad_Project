@@ -3,6 +3,8 @@ import { Http,Response,RequestOptions,Headers } from '@angular/http';
 import 'rxjs';
 import { Observable } from "rxjs/Observable";
 
+export enum Role{
+    Admin=1,
     Parent,
     Child
 }
