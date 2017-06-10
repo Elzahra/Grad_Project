@@ -4,12 +4,23 @@ import { GalleryPage } from '../gallery/gallery';
 import {Camera,CameraOptions} from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {AddChildPage} from '../add-child/add-child';
+
+import { TrackApi } from '../shared/track-api.service'
+/**
+ * Generated class for the SignupPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+
+
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
 })
 //
 export class SignupPage {
+<<<<<<< HEAD
 //
  private imageSrc: string;
  SignupForm:FormGroup;
@@ -19,7 +30,8 @@ export class SignupPage {
   public navParams: NavParams,
   public cam:Camera,
   private loadingCtrl: LoadingController,
-  private formBuilder: FormBuilder
+  private formBuilder: FormBuilder,
+  private trackApi:TrackApi
   ) {
     this.SignupForm=this.formBuilder.group({
       fname:['',Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -63,6 +75,12 @@ GoToAddChild(){
 //
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
+    
   }
 
+// doWork(){
+//   this.trackApi.addParent(this.parent).subscribe(data=>{
+//     console.log("data from signUp: "+data)
+//   })
+// }
 }
