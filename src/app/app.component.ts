@@ -2,11 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import firebase from 'firebase';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MyChildPage } from '../pages/my-child/my-child';
-
+import { AddChildPage } from '../pages/add-child/add-child'
+import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete'
 @Component({
   templateUrl: 'app.html'
 })
@@ -14,8 +15,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
- 
-  pages: Array<{title: string, component: any}>;
+
+  pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
@@ -34,6 +35,18 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      let config = {
+        apiKey: "AIzaSyDohpBfcMQaDLWsfeYnULxdfSxVzfLy-SI",
+        authDomain: "myapp-891c4.firebaseapp.com",
+        databaseURL: "https://myapp-891c4.firebaseio.com",
+        projectId: "myapp-891c4",
+        storageBucket: "myapp-891c4.appspot.com",
+        messagingSenderId: "1034732611687"
+      };
+      firebase.initializeApp(config);
+
+
     });
   }
 
@@ -42,4 +55,16 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+  goToAddChild(){
+    this.nav.push(AddChildPage)
+    
+  }
+  goToLocation(){
+    this.nav.push(PageGmapAutocomplete);
+  }
+  goHome(){
+    this.nav.popToRoot();
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {  NavController, NavParams ,MenuController} from 'ionic-angular';
-import {LoginPage} from'../login/login';
+import { Storage } from '@ionic/Storage';
+
 import {ChildDetailsPage} from'../child-details/child-details';
 /**
  * Generated class for the MyChildPage page.
@@ -14,14 +15,25 @@ import {ChildDetailsPage} from'../child-details/child-details';
 })
 export class MyChildPage {
 children:Array<any>=[];
-  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController) {
+temp:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController, private storage: Storage) {
     //this.menuCtrl.enable(true, 'myMenu');
-    this.children= this.navParams.data.childs;
-    console.log(this.navParams.data);
+    //this.children= this.navParams.data.childs;
+    storage.get('parent').then((val) => {
+    console.log('Your age is', val);
+  });
+
+
   }
 
+  ionViewWillEnter(){
+
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyChildPage');
+    this.temp=this.navParams.data.childs;
+
+    console.log(this.temp);
   }
   //
   ItemChild(event,item)

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-//import { IonicStorageModule } from '@ionic/storage';
 
+import { IonicStorageModule , Storage } from '@ionic/Storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { TrackApi } from '../pages/shared/track-api.service'
@@ -26,7 +26,8 @@ import { AddChildPage } from '../pages/add-child/add-child';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { MyLocationsPage } from '../pages/my-locations/my-locations';
 import { ChildMapPage } from '../pages/child-map/child-map';
-import { GalleryPage } from '../pages/gallery/gallery';
+import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
+import { ModalAutocompleteItems } from '../pages/modal-autocomplete-items/modal-autocomplete-items';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -51,13 +52,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddLocationPage,
     MyLocationsPage,
     ChildMapPage,
-    GalleryPage
+    PageGmapAutocomplete,
+    ModalAutocompleteItems
   ],
   imports: [
     BrowserModule,
     HttpModule,
-
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -78,14 +81,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddLocationPage,
     MyLocationsPage,
     ChildMapPage,
-    GalleryPage
+    PageGmapAutocomplete,
+    ModalAutocompleteItems
   ],
   providers: [
     StatusBar,
     SplashScreen,
     TrackApi,
     Camera,
-    
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

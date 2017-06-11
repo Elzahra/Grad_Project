@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import { MyChildPage } from '../my-child/my-child';
+import { Storage } from '@ionic/Storage';
 //import { Storage } from '@ionic/storage';
 
 import { TrackApi, IParent } from '../shared/track-api.service';
@@ -28,7 +29,7 @@ export class LoginPage {
     private trackApi: TrackApi,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
-    //private store: Storage,
+    private storage: Storage,
     private menuCtrl: MenuController
   ) {
     this.menuCtrl.swipeEnable(false);
@@ -57,13 +58,16 @@ export class LoginPage {
 
     loader.present().then(() => {
       this.trackApi.getParents().subscribe(data => {
+        
         this.parents = data;
         this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
         if (this.selectedParent != undefined) {
           //this.store.set('userId', this.selectedParent.id);
+          this.storage.clear();
+          this.storage.set('parent',this.selectedParent);
           this.navCtrl.setRoot(MyChildPage);
-          this.navCtrl.push(MyChildPage, this.selectedParent);
-          // loader.dismiss();
+      
+          this.navCtrl.popToRoot();
         }
         else {
           this.msg = "Wrong Email Or Password";

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {  NavController, NavParams,LoadingController } from 'ionic-angular';
-import { GalleryPage } from '../gallery/gallery';
-import {Camera,CameraOptions} from '@ionic-native/camera';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import {AddChildPage} from '../add-child/add-child';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
-import { TrackApi } from '../shared/track-api.service'
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { LoginPage } from '../login/login';
+import firebase from 'firebase';
+
+import { TrackApi, IParent, Role } from '../shared/track-api.service'
 /**
  * Generated class for the SignupPage page.
  *
@@ -20,66 +21,161 @@ import { TrackApi } from '../shared/track-api.service'
 })
 //
 export class SignupPage {
-//
- private imageSrc: string;
- SignupForm:FormGroup;
- msg: string = "";
-//
-  constructor(public navCtrl: NavController, 
-  public navParams: NavParams,
-  public cam:Camera,
-  private loadingCtrl: LoadingController,
-  private formBuilder: FormBuilder,
-  private trackApi:TrackApi
+  //
+  private captureDataUrl: string = "";
+  SignupForm: FormGroup;
+  parentObj: IParent = {
+    fname: "",
+    lname: "",
+    email: "",
+    address: {
+      city: "",
+      country: "",
+      street: "",
+    },
+    password: "",
+    imageUrl: "",
+    telephone: "",
+    userRole: Role.Parent,
+    viewFlag: true
+
+  };
+  msg: string = "";
+  afterUpload: string;
+
+  //
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public cam: Camera,
+    private loadingCtrl: LoadingController,
+    private formBuilder: FormBuilder,
+    private trackApi: TrackApi
   ) {
-    this.SignupForm=this.formBuilder.group({
-      fname:['',Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      lname:['',Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      email: ['', Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
-      password: ['',Validators.required],
-      telephone:['',Validators.compose([Validators.required,Validators.pattern('^(0|[1-9][0-9]*)$'),Validators.minLength(1),Validators.maxLength(11)])],
-      address:['',Validators.compose([Validators.required])]
-   });
-  }
-//
-private openGallery (): void {
-   let cameraOptions = {
-    sourceType: this.cam.PictureSourceType.PHOTOLIBRARY,
-    destinationType: this.cam.DestinationType.FILE_URI,      
-    quality: 100,
-    targetWidth: 1000,
-    targetHeight: 1000,
-    encodingType: this.cam.EncodingType.JPEG,      
-    correctOrientation: true      
-  }
- this.cam.getPicture(cameraOptions).then(file_uri=>this.imageSrc=file_uri,err=>console.log(err));
-}
-//
-GoToAddChild(){
-  let fname=this.SignupForm.value.fname;
-  let lname=this.SignupForm.value.lname;
-  let email=this.SignupForm.value.email;
-  let password=this.SignupForm.value.password;
-  let telephone=this.SignupForm.value.telephone;
-  let address=this.SignupForm.value.address;
-  let loader = this.loadingCtrl.create({
-      content: 'Signing Up...',
-      duration:5000
+    this.SignupForm = this.formBuilder.group({
+      fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
+      password: ['', Validators.required],
+      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
+      address: ['', Validators.compose([Validators.required])]
     });
-    loader.present().then(() => {
-      this.navCtrl.push(AddChildPage);
-      loader.dismiss();
-    })
-}
-//
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
-    
+  }
+  //
+  openGallery(): void {
+    let cameraOptions = {
+      sourceType: this.cam.PictureSourceType.SAVEDPHOTOALBUM,
+      destinationType: this.cam.DestinationType.DATA_URL,
+      quality: 100,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      encodingType: this.cam.EncodingType.JPEG,
+      correctOrientation: true
+    }
+    this.cam.getPicture(cameraOptions).then(file_uri => {
+      this.captureDataUrl = 'data:image/jpeg;base64,' + file_uri;
+    }
+      , (err) => {
+        console.log(err)
+      });
+  }
+  //
+
+  openCamera() {
+    const cameraOptions: CameraOptions = {
+      quality: 100,
+      destinationType: this.cam.DestinationType.DATA_URL,
+      encodingType: this.cam.EncodingType.JPEG,
+      mediaType: this.cam.MediaType.PICTURE,
+    };
+
+    this.cam.getPicture(cameraOptions).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      this.captureDataUrl = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
   }
 
-// doWork(){
-//   this.trackApi.addParent(this.parent).subscribe(data=>{
-//     console.log("data from signUp: "+data)
-//   })
-// }
+
+
+  GoToAddChild() {
+
+    let loader = this.loadingCtrl.create({
+      content: 'Signing Up...',
+      duration: 5000,
+      dismissOnPageChange: true
+    });
+    loader.present().then(() => {
+      if (this.captureDataUrl != "") {
+        let storageRef = firebase.storage().ref();
+        // Create a timestamp as filename
+        const filename = Math.floor(Date.now() / 1000);
+
+        // Create a reference to 'images/todays-date.jpg'
+        const imageRef = storageRef.child(`images/${filename}.jpg`);
+
+        imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+          // Do something here when the data is succesfully uploaded!
+
+
+          this.parentObj.fname = this.SignupForm.value.fname;
+          this.parentObj.lname = this.SignupForm.value.lname;
+          this.parentObj.email = this.SignupForm.value.email;
+          this.parentObj.password = this.SignupForm.value.password;
+          this.parentObj.telephone = this.SignupForm.value.telephone;
+          this.parentObj.address.city = this.SignupForm.value.address;
+          this.parentObj.imageUrl = snapshot.downloadURL;
+          console.log(this.parentObj);
+        });
+
+        this.trackApi.addParent(this.parentObj).subscribe(data => {
+          if (data) {
+            this.navCtrl.push(LoginPage);
+            loader.dismiss();
+          }
+          else {
+            this.msg = 'Somting Went Wrong.. Try Again';
+            loader.dismiss();
+          }
+        })
+
+
+
+      }
+      else {
+        this.parentObj.fname = this.SignupForm.value.fname;
+        this.parentObj.lname = this.SignupForm.value.lname;
+        this.parentObj.email = this.SignupForm.value.email;
+        this.parentObj.password = this.SignupForm.value.password;
+        this.parentObj.telephone = this.SignupForm.value.telephone;
+        this.parentObj.address.city = this.SignupForm.value.address;
+        this.parentObj.imageUrl = null;
+        console.log(this.parentObj);
+        this.trackApi.addParent(this.parentObj).subscribe(data => {
+          if (data) {
+            this.navCtrl.push(LoginPage);
+            loader.dismiss();
+          }
+          else {
+            this.msg = 'Somting Went Wrong.. Try Again';
+            loader.dismiss();
+          }
+        })
+
+      }
+
+    })
+  }
+  //
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SignupPage');
+
+  }
+
+  // doWork(){
+  //   this.trackApi.addParent(this.parent).subscribe(data=>{
+  //     console.log("data from signUp: "+data)
+  //   })
+  // }
 }

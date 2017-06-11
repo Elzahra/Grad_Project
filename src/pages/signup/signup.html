@@ -5,30 +5,39 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-row>     
-          <button ion-button (click)="openGallery()" round ><ion-icon name="images"></ion-icon></button>
-          <!--  <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>-->     
-  </ion-row>
+<ion-row>
+  <ion-col>
+    <button ion-button (click)="openGallery()" round><ion-icon name="images"></ion-icon>Gallary</button>
+  </ion-col>
+        <ion-col>
+          <button ion-button (click)="openCamera()" round><ion-icon name="images"></ion-icon>Camera </button>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
+
+      </ion-row>
   <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
     <ion-grid>
       <ion-row>
-        <ion-input type="text" placeholder="First Name" #fname formControlName="fname" ></ion-input>
+        <ion-input type="text" placeholder="First Name" #fname formControlName="fname"></ion-input>
       </ion-row>
       <ion-row>
-        <ion-input type="text" placeholder="Last Name" #lname formControlName="lname" ></ion-input>
+        <ion-input type="text" placeholder="Last Name" #lname formControlName="lname"></ion-input>
       </ion-row>
       <ion-row>
         <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
       </ion-row>
       <ion-row>
-        <ion-input type="password" placeholder="Password" #password formControlName="password" ></ion-input>
+        <ion-input type="password" placeholder="Password" #password formControlName="password"></ion-input>
       </ion-row>
       <ion-row>
-        <ion-input type="text" placeholder="Telephone" #telephone formControlName="telephone" ></ion-input>
+        <ion-input type="text" placeholder="Telephone" #telephone formControlName="telephone"></ion-input>
       </ion-row>
       <ion-row>
-        <ion-input type="text" placeholder="Address" #address formControlName="address" ></ion-input>
-      </ion-row>      
+        <ion-input type="text" placeholder="Address" #address formControlName="address"></ion-input>
+      </ion-row>
       <br/>
       <br/>
       <ion-row>
@@ -37,7 +46,7 @@
       <ion-row>
         <label class="mesg">{{msg}}</label>
       </ion-row>
+      
     </ion-grid>
   </form>
 </ion-content>
-<button ion-button (click)="doWork()">Insert</button>
