@@ -65,6 +65,7 @@ export class LoginPage {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();
           this.storage.set('parent',this.selectedParent);
+          console.log("selectedParent",this.selectedParent);
           this.navCtrl.setRoot(MyChildPage);
       
           this.navCtrl.popToRoot();

@@ -46,7 +46,8 @@ export interface IChild {
     viewFlag: boolean;
     imageUrl: string;
     telephone: string;
-    userRole: Role.Parent;
+    userRole: Role;
+    parent_Id:number;
     address: {
         street: string;
         city: string;
