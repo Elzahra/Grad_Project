@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-import { IonicStorageModule , Storage } from '@ionic/Storage';
+import { IonicStorageModule } from '@ionic/Storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { TrackApi } from '../pages/shared/track-api.service'
-
+import { EmailValidator } from '../pages/shared/validator'
 import {Camera} from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
@@ -89,6 +89,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen,
     TrackApi,
     Camera,
+  
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

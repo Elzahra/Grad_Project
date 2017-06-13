@@ -5,7 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import firebase from 'firebase';
-
+import { EmailValidator } from '../shared/validator'
 import { TrackApi, IParent, Role } from '../shared/track-api.service'
 /**
  * Generated class for the SignupPage page.
@@ -49,7 +49,8 @@ export class SignupPage {
     public cam: Camera,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
-    private trackApi: TrackApi
+    private trackApi: TrackApi,
+    private emailValidator:EmailValidator
   ) {
     this.SignupForm = this.formBuilder.group({
       fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],

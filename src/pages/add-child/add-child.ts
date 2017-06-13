@@ -113,7 +113,6 @@ export class AddChildPage {
 //////////////////////////////////////////////////////////////////
 
   GoToAddChild() {
-
     let loader = this.loadingCtrl.create({
       content: 'Signing Up...',
       duration: 5000,
