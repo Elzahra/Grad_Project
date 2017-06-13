@@ -46,7 +46,8 @@ export interface IChild {
     viewFlag: boolean;
     imageUrl: string;
     telephone: string;
-    userRole: Role.Parent;
+    userRole: Role;
+    parent_Id:number;
     address: {
         street: string;
         city: string;
@@ -61,10 +62,11 @@ export interface IChild {
 export class TrackApi {
     private baseUrl = 'http://localhost:28529/api';
     //head = new Headers({ 'Content-Type': 'application/json' });
-
+//http://localhost:28529/api/parent/GetByEmail
     constructor(private http: Http) {
 
     }
+
 
     getParents(): Observable<IParent[]> {
         return this.http.get(`${this.baseUrl}/parent`)
@@ -97,6 +99,14 @@ export class TrackApi {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
         return this.http.post(`${this.baseUrl}/Locations`, bodyString, { headers: headers })
+            .map((res: Response) => {
+                console.log("Response From Api: " + res.json());
+                return res.json();
+            })
+    }
+    validateEmail(body:string):Observable<IParent>{
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        return this.http.post(`${this.baseUrl}/Locations`, body, { headers: headers })
             .map((res: Response) => {
                 console.log("Response From Api: " + res.json());
                 return res.json();

@@ -5,19 +5,19 @@
 </ion-header>
 
 <ion-content padding>
-<ion-row>
-  <ion-col>
-    <button ion-button (click)="openGallery()" round><ion-icon name="images"></ion-icon>Gallary</button>
-  </ion-col>
-        <ion-col>
-          <button ion-button (click)="openCamera()" round><ion-icon name="images"></ion-icon>Camera </button>
-        </ion-col>
+  <ion-row>
+    <ion-col>
+      <button ion-button (click)="openGallery()" round><ion-icon name="images"></ion-icon>Gallary</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button (click)="openCamera()" round><ion-icon name="images"></ion-icon>Camera </button>
+    </ion-col>
 
-      </ion-row>
-      <ion-row>
-        <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
+  </ion-row>
+  <ion-row>
+    <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
 
-      </ion-row>
+  </ion-row>
   <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
     <ion-grid>
       <ion-row>
@@ -27,7 +27,13 @@
         <ion-input type="text" placeholder="Last Name" #lname formControlName="lname"></ion-input>
       </ion-row>
       <ion-row>
+        <!--<ion-input placeholder="Email" [class.invalid]="!SignupForm.controls.email.valid && (SignupForm.controls.email.dirty || submitAttempt)" formControlName="email" type="text"></ion-input>-->
+
+
         <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
+        <ion-item *ngIf="!SignupForm.controls.email.valid && !SignupForm.controls.email.pending && (SignupForm.controls.email.dirty || submitAttempt)">
+          <p>Sorry, that Email can not be used!</p>
+        </ion-item>
       </ion-row>
       <ion-row>
         <ion-input type="password" placeholder="Password" #password formControlName="password"></ion-input>
@@ -46,7 +52,7 @@
       <ion-row>
         <label class="mesg">{{msg}}</label>
       </ion-row>
-      
+
     </ion-grid>
   </form>
 </ion-content>
