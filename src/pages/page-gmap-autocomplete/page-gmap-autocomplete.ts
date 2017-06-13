@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, LoadingController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController, ToastController } from 'ionic-angular';
 import { ModalAutocompleteItems } from '../modal-autocomplete-items/modal-autocomplete-items';
 import { TrackApi, ILocation } from '../shared/track-api.service';
 import { Storage } from '@ionic/Storage';
@@ -12,7 +12,7 @@ declare var google: any;
 })
 export class PageGmapAutocomplete implements OnInit {
 
-    parentId:number;
+    parentId: number;
     locationObj: ILocation = {
         name: '',
         fullAddress: '',
@@ -33,12 +33,13 @@ export class PageGmapAutocomplete implements OnInit {
         public modalCtrl: ModalController,
         private loadingCtrl: LoadingController,
         private storage: Storage,
-        private trackApi:TrackApi
+        private trackApi: TrackApi,
+        private toastCtrl: ToastController
     ) {
 
         storage.get('parent').then((val) => {
-            this.parentId=val.id;
-            console.log("Parent ID: ",this.parentId);
+            this.parentId = val.id;
+            console.log("Parent ID: ", this.parentId);
         });
     }
 
@@ -49,7 +50,7 @@ export class PageGmapAutocomplete implements OnInit {
 
     showModal() {
         // reset 
-       
+
         this.reset();
         // show modal|
         let modal = this.modalCtrl.create(ModalAutocompleteItems);
@@ -161,33 +162,46 @@ export class PageGmapAutocomplete implements OnInit {
 
 
     addLocation() {
-        this.locationObj.name=this.address.place;
-        this.locationObj.fullAddress=this.placedetails.address;
-        this.locationObj.lng=this.placedetails.lng;
-        this.locationObj.lat=this.placedetails.lat;
-        this.locationObj.parent_key=this.parentId;
+        this.locationObj.name = this.address.place;
+        this.locationObj.fullAddress = this.placedetails.address;
+        this.locationObj.lng = this.placedetails.lng;
+        this.locationObj.lat = this.placedetails.lat;
+        this.locationObj.parent_key = this.parentId;
 
-        console.log("locationObj",this.locationObj);
+        console.log("locationObj", this.locationObj);
         let loader = this.loadingCtrl.create({
             content: 'Adding Location...',
             duration: 5000,
             dismissOnPageChange: true
         });
-        loader.present().then(()=>{
-            this.trackApi.addLocation(this.locationObj).subscribe(data=>{
-                if(data){
+        //
+
+        loader.present().then(() => {
+            this.trackApi.addLocation(this.locationObj).subscribe(data => {
+                if (data) {
                     this.reset();
                     loader.dismiss();
+
+                    let toast = this.toastCtrl.create({
+                        message: 'Location was added successfully',
+                        duration: 3000,
+                        position: 'top'
+                    });
+                    toast.onDidDismiss(() => {
+                        console.log('Dismissed toast');
+                    });
+
+                    toast.present();
                 }
-                else{
+                else {
                     console.log("Error");
                 }
             })
         })
 
+
+
+
     }
-
-
-
 
 }

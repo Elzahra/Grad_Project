@@ -77,6 +77,8 @@ export class LoginPage {
       })
     })
 
+
+
 // loader.onDidDismiss(()=>{
 //    this.msg = "Connection TimeOut Try Again Later.";
 // })
