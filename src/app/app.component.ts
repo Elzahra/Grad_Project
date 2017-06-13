@@ -1,70 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import firebase from 'firebase';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { MyChildPage } from '../pages/my-child/my-child';
-import { AddChildPage } from '../pages/add-child/add-child'
-import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete'
-@Component({
-  templateUrl: 'app.html'
-})
-export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+<ion-menu id="myMenu" [content]="content">
+   <ion-toolbar>
+      <ion-title>Child Tracking</ion-title>
+    </ion-toolbar>
 
-  rootPage: any = HomePage;
+  <ion-content>
+    <ion-list>
+      <ion-list-header>Navigate</ion-list-header>
+      <button menuClose ion-item (click)="goHome()" >Home</button>
+      <button menuClose ion-item (click)="goToParentPage()" >Profile</button>
+      <button menuClose ion-item (click)="goToAddChild()" >Add Child</button>
+      <button menuClose ion-item (click)="goToLocation()" >Add Location</button>    
+    </ion-list>
+  </ion-content>
 
-  pages: Array<{ title: string, component: any }>;
+</ion-menu>
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
-    ];
-
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-
-      let config = {
-        apiKey: "AIzaSyDohpBfcMQaDLWsfeYnULxdfSxVzfLy-SI",
-        authDomain: "myapp-891c4.firebaseapp.com",
-        databaseURL: "https://myapp-891c4.firebaseio.com",
-        projectId: "myapp-891c4",
-        storageBucket: "myapp-891c4.appspot.com",
-        messagingSenderId: "1034732611687"
-      };
-      firebase.initializeApp(config);
-
-
-    });
-  }
-
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
-
-  goToAddChild(){
-    this.nav.push(AddChildPage)
-    
-  }
-  goToLocation(){
-    this.nav.push(PageGmapAutocomplete);
-  }
-  goHome(){
-    this.nav.popToRoot();
-  }
-
-}
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

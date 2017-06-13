@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, LoadingController,ToastController } from 'ionic-angular';
 import { MyChildPage } from '../my-child/my-child';
 import { Storage } from '@ionic/Storage';
 //import { Storage } from '@ionic/storage';
@@ -30,7 +30,8 @@ export class LoginPage {
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private storage: Storage,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private toastCtrl: ToastController
   ) {
     this.menuCtrl.swipeEnable(false);
     this.loginForm = this.formBuilder.group({
