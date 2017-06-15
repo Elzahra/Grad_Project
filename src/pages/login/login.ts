@@ -60,7 +60,7 @@ export class LoginPage {
       this.trackApi.getParents().subscribe(data => {
         
         this.parents = data;
-        this.selectedParent = this.parents.find(p => p.email == email && p.password == pass)
+        this.selectedParent = this.parents.find(p => p.email.toLowerCase() == email.toLowerCase() && p.password == pass)
         if (this.selectedParent != undefined) {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();

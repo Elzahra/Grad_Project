@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar color="primary">
-        <ion-title>Child Name</ion-title>
+        <ion-title>{{child.fname}}</ion-title>
         <ion-buttons end>
                 <button ion-button (click)="removeChild()">
         <ion-icon name="trash"></ion-icon>
@@ -23,8 +23,8 @@
 
 
 <ion-tabs>
-  <ion-tab tabTitle="Map" [root]="childMonTab" [rootParams]="team" tabIcon="map"></ion-tab>
-  <ion-tab tabTitle="Statistics" [root]="statisticsTab" [rootParams]="team" tabIcon="podium"></ion-tab>
-  <ion-tab tabTitle="Shecdual" [root]="shecdualTab" [rootParams]="team" tabIcon="plane"></ion-tab>
+  <ion-tab tabTitle="Map" [root]="childMonTab" [rootParams]="child" tabIcon="map"></ion-tab>
+  <ion-tab tabTitle="Statistics" [root]="statisticsTab" [rootParams]="child" tabIcon="podium"></ion-tab>
+  <ion-tab tabTitle="Shecdual" [root]="shecdualTab" [rootParams]="child" tabIcon="plane"></ion-tab>
 
 </ion-tabs>

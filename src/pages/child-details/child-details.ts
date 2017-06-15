@@ -15,10 +15,14 @@ import { ChildMapPage } from '../child-map/child-map';
   templateUrl: 'child-details.html',
 })
 export class ChildDetailsPage {
+  child:any;
   childMonTab: any = ChildMapPage;
   statisticsTab: any = StatisticsPage;
   shecdualTab: any = SetSchedulePage;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.child=this.navParams.data;
+    console.log("navParams",this.navParams.data);
+    console.log("ChildDetailsPage",this.child);
   }
 
   ionViewDidLoad() {

@@ -3,19 +3,14 @@ import { NavController, NavParams, MenuController, LoadingController } from 'ion
 import { Storage } from '@ionic/Storage';
 
 import { ChildDetailsPage } from '../child-details/child-details';
-/**
- * Generated class for the MyChildPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @Component({
   selector: 'page-my-child',
   templateUrl: 'my-child.html',
 })
 export class MyChildPage {
   children: Array<any> = [];
-  selectedParent: any;
+  selectedParent: any={};
   temp: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private storage: Storage, private loadingCtrl: LoadingController) {
     console.log("constractor");
@@ -29,27 +24,35 @@ export class MyChildPage {
   }
 
   ionViewWillEnter() {
-    let loader = this.loadingCtrl.create({
-      content: 'Loading...'
-      //dismissOnPageChange: true
+    // let loader = this.loadingCtrl.create({
+    //   content: 'Loading...'
+    //   //dismissOnPageChange: true
+    // });
+    // loader.present().then(() => {
+    //   this.storage.get('parent').then((val) => {
+    //     this.selectedParent = val;
+    //     this.children = this.selectedParent.childs;
+    //     loader.dismiss();
+    //   });
+    // })
+
+  }
+  ionViewDidLoad() {
+      let loader = this.loadingCtrl.create({
+      content: 'Loading...',
+      dismissOnPageChange: true
     });
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
         this.selectedParent = val;
         this.children = this.selectedParent.childs;
-        loader.dismiss();
+       loader.dismiss();
       });
     })
-
-  }
-  ionViewDidLoad() {
-    console.log("didLaod");
   }
   //
-  ItemChild(event, item) {
-    this.navCtrl.push(ChildDetailsPage, {
-      item: item
-    });
+  ItemChild($event, item) {
+    this.navCtrl.push(ChildDetailsPage,item);
   }
   //
   openMenu() {

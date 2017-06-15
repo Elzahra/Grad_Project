@@ -27,7 +27,7 @@
 
 <ion-content padding>
  <ion-list>
-    <button ion-item *ngFor="let child of children"  (click)="ItemChild($event, item)">
+    <button ion-item *ngFor="let child of children"  (click)="ItemChild($event, child)">
       {{child.fname}}
     </button>
   </ion-list>
