@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, LoadingController, ToastController } from 'ionic-angular';
 import { MyChildPage } from '../my-child/my-child';
+//import { ChildProfilePage } from '../child-profile/child-profile';
 import { Storage } from '@ionic/Storage';
 //import { Storage } from '@ionic/storage';
 
@@ -21,7 +22,9 @@ export class LoginPage {
 
   loginForm: FormGroup;
   parents: Array<IParent> = [];
+  //children: Array<IChild> = [];
   selectedParent: IParent;
+ // selectedChild: IChild;
   msg: string = "";
 
   constructor(public navCtrl: NavController,
@@ -30,7 +33,8 @@ export class LoginPage {
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private storage: Storage,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private toastCtrl: ToastController
   ) {
     this.menuCtrl.swipeEnable(false);
     this.loginForm = this.formBuilder.group({
@@ -58,16 +62,13 @@ export class LoginPage {
 
     loader.present().then(() => {
       this.trackApi.getParents().subscribe(data => {
-        
         this.parents = data;
         this.selectedParent = this.parents.find(p => p.email.toLowerCase() == email.toLowerCase() && p.password == pass)
         if (this.selectedParent != undefined) {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();
           this.storage.set('parent',this.selectedParent);
-          console.log("selectedParent",this.selectedParent);
           this.navCtrl.setRoot(MyChildPage);
-      
           this.navCtrl.popToRoot();
         }
         else {
@@ -77,9 +78,11 @@ export class LoginPage {
       })
     })
 
-// loader.onDidDismiss(()=>{
-//    this.msg = "Connection TimeOut Try Again Later.";
-// })
+
+
+    // loader.onDidDismiss(()=>{
+    //    this.msg = "Connection TimeOut Try Again Later.";
+    // })
 
 
   }

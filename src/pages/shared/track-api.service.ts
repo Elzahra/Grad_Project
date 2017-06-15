@@ -47,7 +47,7 @@ export interface IChild {
     imageUrl: string;
     telephone: string;
     userRole: Role;
-    parent_Id:number;
+    parent_Id: number;
     address: {
         street: string;
         city: string;
@@ -62,7 +62,7 @@ export interface IChild {
 export class TrackApi {
     private baseUrl = 'http://localhost:28529/api';
     //head = new Headers({ 'Content-Type': 'application/json' });
-//http://localhost:28529/api/parent/GetByEmail
+    //http://localhost:28529/api/parent/GetByEmail
     constructor(private http: Http) {
 
     }
@@ -75,7 +75,21 @@ export class TrackApi {
             })
 
     }
-
+    ///////////////////////
+    getParentsById(key): Observable<IParent[]> {
+        return this.http.get(`${this.baseUrl}/parent/{key}`)
+            .map((res: Response) => {
+                return res.json();
+            })
+    }
+    ////////////////////////
+    getChildren(): Observable<IChild[]> {
+        return this.http.get(`${this.baseUrl}/Child`)
+            .map((res: Response) => {
+                return res.json();
+            })
+    }
+    /////////////////////////////
     addParent(body: IParent): Observable<IParent> {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
@@ -85,6 +99,21 @@ export class TrackApi {
                 return res.json();
             })
     }
+    ////////////////////////
+    UpdateParent(parent: IParent): Observable<IParent> {
+        console.log("inside api service", parent);
+        console.log("   iiiiiid   ", parent.id);
+        let bodyString = JSON.stringify(parent); // Stringify payload
+        console.log(" bodyString ", bodyString);
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+
+
+        return this.http.put(`${this.baseUrl}/parent/${parent.id}`, bodyString, { headers: headers }).map((res: Response) => {
+                console.log("Response From put Api: " + res.json());
+                return res.json();
+            })
+    }
+    ////////////////////////
     addChild(body: IChild): Observable<IChild> {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
@@ -104,7 +133,7 @@ export class TrackApi {
                 return res.json();
             })
     }
-    validateEmail(body:string):Observable<IParent>{
+    validateEmail(body: string): Observable<IParent> {
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
         return this.http.post(`${this.baseUrl}/Locations`, body, { headers: headers })
             .map((res: Response) => {
@@ -112,5 +141,6 @@ export class TrackApi {
                 return res.json();
             })
     }
+    /////////////////////////////
 
 }

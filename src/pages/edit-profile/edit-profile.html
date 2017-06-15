@@ -1,0 +1,91 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>edit-profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+<form [formGroup]="profileForm" (ngSubmit)="DoneEditProfile()">
+  <ion-grid>
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">First Name</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="fname"   formControlName="fname" ></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">Last Name</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="lname"  formControlName="lname"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">Email</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="email" formControlName="email"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">password</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text"  [(ngModel)]="password" formControlName="password"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">Telephone</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="telephone" formControlName="telephone"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">Street</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="street" formControlName="street"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">City</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="city" formControlName="city"></ion-input>
+      </ion-col>
+    </ion-row>
+
+     <ion-row>
+      <ion-col>
+        <label class="lbl_fixed">Country</label>
+      </ion-col>
+      <ion-col>
+        <ion-input class="txt" type="text" [(ngModel)]="country" formControlName="country"></ion-input>
+      </ion-col>
+    </ion-row>
+
+<ion-row>
+  <ion-col>
+    <button ion-button full color="secondary" type="submit" [disabled]="!profileForm.valid">Save Changes</button>
+  </ion-col>
+</ion-row>
+  </ion-grid>
+</form>
+</ion-content>

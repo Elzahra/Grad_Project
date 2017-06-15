@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MyChildPage } from '../pages/my-child/my-child';
 import { AddChildPage } from '../pages/add-child/add-child'
+import { ParentProfilePage } from '../pages/parent-profile/parent-profile'
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete'
 @Component({
   templateUrl: 'app.html'
@@ -62,6 +63,9 @@ export class MyApp {
   }
   goToLocation(){
     this.nav.push(PageGmapAutocomplete);
+  }
+ goToParentPage(){
+    this.nav.push(ParentProfilePage);
   }
   goHome(){
     this.nav.popToRoot();

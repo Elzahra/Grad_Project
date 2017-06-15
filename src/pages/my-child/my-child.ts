@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/Storage';
-
 import { ChildDetailsPage } from '../child-details/child-details';
 
 @Component({
@@ -15,12 +14,10 @@ export class MyChildPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, private storage: Storage, private loadingCtrl: LoadingController) {
     console.log("constractor");
     storage.get('parent').then((val) => {
-      console.log('Your age is', val);
+      console.log('Your aaaaaage is', val);
       this.children = val.childs;
       this.selectedParent = val;
     });
-
-
   }
 
   ionViewWillEnter() {
