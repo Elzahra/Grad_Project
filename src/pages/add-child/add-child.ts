@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
@@ -49,7 +49,8 @@ export class AddChildPage {
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private trackApi: TrackApi,
-    private storage: Storage
+    private storage: Storage,
+    private toastCtrl:ToastController
     ){
       this.SignupForm = this.formBuilder.group({
       fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -172,6 +173,7 @@ export class AddChildPage {
           this.ChildObj.address.street=this.SignupForm.value.street;
           this.ChildObj.address.country=this.SignupForm.value.country;
         this.ChildObj.imageUrl = null;
+        //"https://upload.wikimedia.org/wikipedia/en/9/9d/Kids_film.jpg";
         console.log(this.ChildObj);
         this.trackApi.addChild(this.ChildObj).subscribe(data => {
           if (data) {
@@ -179,6 +181,19 @@ export class AddChildPage {
             loader.dismiss();
             this.parentObj.childs.push(this.ChildObj);
             this.storage.set('parent',this.parentObj);
+
+
+ let toast = this.toastCtrl.create({
+                        message: 'Your child was added successfully',
+                        duration: 3000,
+                        position: 'middle'
+                    });
+                    toast.onDidDismiss(() => {
+                        console.log('Dismissed toast');
+                    });
+
+                    toast.present();
+                    
             this.SignupForm.reset();
           }
           else {
@@ -186,9 +201,7 @@ export class AddChildPage {
             loader.dismiss();
           }
         })
-
       }
-
     })
   }
   ////////////////////////////////////////////////////////////////

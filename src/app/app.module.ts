@@ -23,6 +23,7 @@ import { AddChildPage } from '../pages/add-child/add-child';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { MyLocationsPage } from '../pages/my-locations/my-locations';
 import { ChildMapPage } from '../pages/child-map/child-map';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { ModalAutocompleteItems } from '../pages/modal-autocomplete-items/modal-autocomplete-items';
@@ -52,7 +53,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChildMapPage,
     PageGmapAutocomplete,
     ModalAutocompleteItems,
-    ParentProfilePage
+    ParentProfilePage,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChildMapPage,
     PageGmapAutocomplete,
     ModalAutocompleteItems,
-    ParentProfilePage
+    ParentProfilePage,
+    EditProfilePage
   ],
   providers: [
     StatusBar,

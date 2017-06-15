@@ -185,7 +185,7 @@ export class PageGmapAutocomplete implements OnInit {
                     let toast = this.toastCtrl.create({
                         message: 'Location was added successfully',
                         duration: 3000,
-                        position: 'top'
+                        position: 'middle'
                     });
                     toast.onDidDismiss(() => {
                         console.log('Dismissed toast');
