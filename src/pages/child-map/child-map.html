@@ -7,8 +7,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <!--<sebm-google-map 
+<ion-content>
+    <agm-map
+      *ngIf="locationFlag"
       [latitude]="lat"
       [longitude]="lng"
       [zoom]="zoom"
@@ -16,20 +17,20 @@
       [zoomControl]="true"
       >
     
-      <sebm-google-map-marker 
-          [latitude]="m.lat"
-          [longitude]="m.lng"
-          [label]="m.label"
+      <agm-marker 
+          [latitude]="lat"
+          [longitude]="lng"
+          [label]="childObj.fname"
           
           >
           
-        <sebm-google-map-info-window>
-          <strong>InfoWindow content</strong>
-        </sebm-google-map-info-window>
+        <agm-info-window>
+          <strong>Speed {{speed}} Km/h</strong>
+        </agm-info-window>
         
-      </sebm-google-map-marker>
+      </agm-marker>
       
 
 
-    </sebm-google-map>-->
+    </agm-map>
 </ion-content>
