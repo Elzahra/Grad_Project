@@ -12,12 +12,12 @@
     <ion-col>
       <button ion-button (click)="openCamera()" round><ion-icon name="images"></ion-icon>Camera </button>
     </ion-col>
-
   </ion-row>
+
   <ion-row>
     <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
-
   </ion-row>
+  
   <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
     <ion-grid>
       <ion-row>

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
 import { Storage } from '@ionic/Storage';
 import { TrackApi, IChild, Role, IParent } from '../shared/track-api.service'
-
-
+import { MyChildPage} from '../my-child/my-child';
 /**
  * Generated class for the AddChildPage page.
  *
@@ -19,7 +18,7 @@ import { TrackApi, IChild, Role, IParent } from '../shared/track-api.service'
 })
 export class AddChildPage {
 
-  
+
   private captureDataUrl: string = "";
   SignupForm: FormGroup;
   ChildObj: IChild = {
@@ -35,48 +34,44 @@ export class AddChildPage {
     imageUrl: "",
     telephone: "",
     userRole: Role.Child,
-    parent_Id:0,
+    parent_Id: 0,
     viewFlag: true
 
   };
   msg: string = "";
   afterUpload: string;
-  parentObj:any;
+  parentObj: any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public cam: Camera,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private trackApi: TrackApi,
     private storage: Storage,
-    private toastCtrl:ToastController
-    ){
-      this.SignupForm = this.formBuilder.group({
+    private toastCtrl: ToastController
+  ) {
+    this.SignupForm = this.formBuilder.group({
       fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       //lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
       password: ['', Validators.required],
       telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
       city: ['', Validators.compose([Validators.required])],
-      street:['', Validators.compose([Validators.required])],
-      country:['', Validators.compose([Validators.required])]
-
+      street: ['', Validators.compose([Validators.required])],
+      country: ['', Validators.compose([Validators.required])]
     });
-      storage.get('parent').then((val) => {
-            this.parentObj=val;
-            console.log("Parent ID: ",this.parentObj.id);
-        });
-
-
+    storage.get('parent').then((val) => {
+      this.parentObj = val;
+      console.log("Parent ID: ", this.parentObj.id);
+    });
   }
-
+  /////////////////////////////////////////////////////
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddChildPage');
   }
-
-////////////////////////////////////////////////////
-    openGallery(): void {
+  ////////////////////////////////////////////////////
+  openGallery(): void {
     let cameraOptions = {
       sourceType: this.cam.PictureSourceType.SAVEDPHOTOALBUM,
       destinationType: this.cam.DestinationType.DATA_URL,
@@ -93,8 +88,7 @@ export class AddChildPage {
         console.log(err)
       });
   }
-/////////////////////////////////////////////////////////
-
+  /////////////////////////////////////////////////////////
   openCamera() {
     const cameraOptions: CameraOptions = {
       quality: 100,
@@ -111,7 +105,7 @@ export class AddChildPage {
       // Handle error
     });
   }
-//////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
 
   GoToAddChild() {
     let loader = this.loadingCtrl.create({
@@ -124,32 +118,28 @@ export class AddChildPage {
         let storageRef = firebase.storage().ref();
         // Create a timestamp as filename
         const filename = Math.floor(Date.now() / 1000);
-
         // Create a reference to 'images/todays-date.jpg'
         const imageRef = storageRef.child(`images/${filename}.jpg`);
-
         imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
           // Do something here when the data is succesfully uploaded!
-
-
           this.ChildObj.fname = this.SignupForm.value.fname;
           this.ChildObj.lname = this.parentObj.fname;
           this.ChildObj.email = this.SignupForm.value.email;
           this.ChildObj.password = this.SignupForm.value.password;
           this.ChildObj.telephone = this.SignupForm.value.telephone;
           this.ChildObj.address.city = this.SignupForm.value.city;
-          this.ChildObj.address.street=this.SignupForm.value.street;
-          this.ChildObj.address.country=this.SignupForm.value.country;
-          this.ChildObj.parent_Id=this.parentObj.id;
+          this.ChildObj.address.street = this.SignupForm.value.street;
+          this.ChildObj.address.country = this.SignupForm.value.country;
+          this.ChildObj.parent_Id = this.parentObj.id;
           this.ChildObj.imageUrl = snapshot.downloadURL;
           console.log(this.ChildObj);
         });
 
         this.trackApi.addChild(this.ChildObj).subscribe(data => {
           if (data) {
-            
+
             loader.dismiss();
-            
+
             this.SignupForm.reset();
           }
           else {
@@ -157,43 +147,48 @@ export class AddChildPage {
             loader.dismiss();
           }
         })
-
-
-
       }
-      else 
-      {
-          this.ChildObj.parent_Id=this.parentObj.id;  
-          this.ChildObj.fname = this.SignupForm.value.fname;
-          this.ChildObj.lname = this.parentObj.fname;
-          this.ChildObj.email = this.SignupForm.value.email;
-          this.ChildObj.password = this.SignupForm.value.password;
-          this.ChildObj.telephone = this.SignupForm.value.telephone;
-          this.ChildObj.address.city = this.SignupForm.value.city;
-          this.ChildObj.address.street=this.SignupForm.value.street;
-          this.ChildObj.address.country=this.SignupForm.value.country;
+      ///////////////////////////////
+      else {
+        this.ChildObj.parent_Id = this.parentObj.id;
+        this.ChildObj.fname = this.SignupForm.value.fname;
+        this.ChildObj.lname = this.parentObj.fname;
+        this.ChildObj.email = this.SignupForm.value.email;
+        this.ChildObj.password = this.SignupForm.value.password;
+        this.ChildObj.telephone = this.SignupForm.value.telephone;
+        this.ChildObj.address.city = this.SignupForm.value.city;
+        this.ChildObj.address.street = this.SignupForm.value.street;
+        this.ChildObj.address.country = this.SignupForm.value.country;
         this.ChildObj.imageUrl = null;
         //"https://upload.wikimedia.org/wikipedia/en/9/9d/Kids_film.jpg";
         console.log(this.ChildObj);
         this.trackApi.addChild(this.ChildObj).subscribe(data => {
           if (data) {
-            
+
             loader.dismiss();
             this.parentObj.childs.push(this.ChildObj);
-            this.storage.set('parent',this.parentObj);
+            this.storage.set('parent', this.parentObj);
+            
 
 
- let toast = this.toastCtrl.create({
-                        message: 'Your child was added successfully',
-                        duration: 3000,
-                        position: 'middle'
-                    });
-                    toast.onDidDismiss(() => {
-                        console.log('Dismissed toast');
-                    });
+            let toast = this.toastCtrl.create({
+              message: 'Your child was added successfully',
+              duration: 2000,
+              position: 'middle'
+            });
+            toast.onDidDismiss(() => {
+              console.log('Dismissed toast',this.parentObj.id);
+              let prnt_id =this.parentObj.id;
+                    this.trackApi.getParentsById(prnt_id).subscribe(Pdata=>{  
+                    console.log("parent val <<<<<<<<>>>>>",Pdata);   
+                    this.storage.clear();                                   
+                    this.storage.set('parent', Pdata);        
+                    this.navCtrl.popToRoot();
+                    });//getParentsById
+            });
 
-                    toast.present();
-                    
+            toast.present();
+
             this.SignupForm.reset();
           }
           else {
