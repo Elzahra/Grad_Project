@@ -46,7 +46,8 @@ export class ChildMapPage {
       this.socket.emit('joinParent', this.selectedParent.id);
     })
     this.socket.on('message', data => {
-      this.messages.push(data);
+      //this.messages.push(data);
+      console.log("message>>>>",data)
     })
 
   }
