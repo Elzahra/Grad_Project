@@ -27,7 +27,7 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { ModalAutocompleteItems } from '../pages/modal-autocomplete-items/modal-autocomplete-items';
-
+import { AgmCoreModule } from '@agm/core';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -60,7 +60,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD147jg0SjU32sglPT4qfi2VfGcL1EC364'
+    })
     
   ],
   bootstrap: [IonicApp],

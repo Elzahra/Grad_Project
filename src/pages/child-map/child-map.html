@@ -7,15 +7,30 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <!--<h3>{{child.lname}}</h3>-->
-  <ion-grid>
-  <ion-row>
-    <ion-col col-9><ion-input placeholder="Message" type="text" #msg value=""></ion-input></ion-col>
-    <ion-col col-3><button ion-button (click)="send($event,msg.value)">Send</button></ion-col>
-  </ion-row>
-<ul>
-  <li *ngFor="let item of messages">{{item}}</li>
-</ul>
-</ion-grid>
+<ion-content>
+    <agm-map
+      *ngIf="locationFlag"
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="true"
+      [zoomControl]="true"
+      >
+    
+      <agm-marker 
+          [latitude]="lat"
+          [longitude]="lng"
+          [label]="childObj.fname"
+          
+          >
+          
+        <agm-info-window>
+          <strong>Speed {{speed}} Km/h</strong>
+        </agm-info-window>
+        
+      </agm-marker>
+      
+
+
+    </agm-map>
 </ion-content>

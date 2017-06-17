@@ -14,9 +14,18 @@ import * as io from 'socket.io-client'
   templateUrl: 'child-map.html',
 })
 export class ChildMapPage {
+  // google maps zoom level
+  zoom: number = 18;
+  
+  // initial center position for the map
+  lat: number = 51.673858;
+  lng: number = 7.815982;
+  locationFlag:any;
+  speed:number=0;
   childObj: any = {};
   selectedParent: any = {};
   socket: any;
+  
   messages: Array<string>=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private loadingCtrl: LoadingController) {
     console.log("constructor")
@@ -46,7 +55,14 @@ export class ChildMapPage {
       this.socket.emit('joinParent', this.selectedParent.id);
     })
     this.socket.on('message', data => {
-      this.messages.push(data);
+      //this.messages.push(data);
+      console.log("message latitude>>>>",data.latitude)
+     
+      this.locationFlag=data;
+      this.lat=data.latitude;
+      this.lng=data.longitude;
+      this.speed= data.speed ? data.speed*3.6 : 0
+      
     })
 
   }
