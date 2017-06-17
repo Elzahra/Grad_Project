@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import 'rxjs';
 import { Observable } from "rxjs/Observable";
 
@@ -145,7 +145,7 @@ export class TrackApi {
 //////////////////////////////////
  DeleteChild (id:string): Observable<Comment[]> {
         return this.http.delete(`${this.baseUrl}/Child/${id}`) 
-                         .map((res:Response) => res.json())
+                         //.map((res:Response) => res.json())
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
     }   
 }

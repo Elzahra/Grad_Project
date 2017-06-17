@@ -57,7 +57,6 @@ export class ChildMapPage {
     this.socket.on('message', data => {
       //this.messages.push(data);
       console.log("message latitude>>>>",data.latitude)
-     
       this.locationFlag=data;
       this.lat=data.latitude;
       this.lng=data.longitude;

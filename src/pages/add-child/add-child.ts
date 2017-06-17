@@ -184,6 +184,7 @@ export class AddChildPage {
                     this.storage.clear();                                   
                     this.storage.set('parent', Pdata);        
                     this.navCtrl.popToRoot();
+                    //this.navCtrl.push(MyChildPage);
                     });//getParentsById
             });
 
