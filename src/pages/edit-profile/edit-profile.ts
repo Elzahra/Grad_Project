@@ -146,8 +146,8 @@ export class EditProfilePage {
           this.parentObj.email = this.profileForm.value.email;
           this.parentObj.password = this.profileForm.value.password;
           this.parentObj.telephone = this.profileForm.value.telephone;
-          this.parentObj.userRole = Role.Parent,
-            this.parentObj.viewFlag = true
+          this.parentObj.userRole = Role.Parent;
+          this.parentObj.viewFlag = true;
          // this.parentObj.imageUrl =snapshot.downloadURL ;
           this.parentObj.address.city = this.profileForm.value.city;
           this.parentObj.address.street = this.profileForm.value.street;
