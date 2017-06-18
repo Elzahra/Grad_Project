@@ -136,7 +136,7 @@ export class TrackApi {
 ////////////////////////////////////
     validateEmail(body: string): Observable<IParent> {
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-        return this.http.post(`${this.baseUrl}/Locations`, body, { headers: headers })
+        return this.http.post(`${this.baseUrl}/parent?${body}`, body, { headers: headers })
             .map((res: Response) => {
                 console.log("Response From Api: " + res.json());
                 return res.json();

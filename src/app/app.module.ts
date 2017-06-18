@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { IonicStorageModule , Storage } from '@ionic/Storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TrackApi } from '../pages/shared/track-api.service'
+import { EmailValidator } from '../pages/shared/validator'
 import {Camera} from '@ionic-native/camera';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -93,6 +94,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    EmailValidator,
     TrackApi,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

@@ -32,6 +32,7 @@ export class MyChildPage {
     });
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
+        console.log("parent val", val);
         this.selectedParent = val;
         this.children = this.selectedParent.childs;
         loader.dismiss();

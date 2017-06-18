@@ -17,33 +17,92 @@
   <ion-row>
     <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
   </ion-row>
-  
+
   <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
     <ion-grid>
       <ion-row>
         <ion-input type="text" placeholder="First Name" #fname formControlName="fname"></ion-input>
       </ion-row>
+      <span class="help-block" *ngIf="(SignupForm.get('fname').touched || 
+                                                         SignupForm.get('fname').dirty)  &&
+                                                         SignupForm.get('fname').errors">
+                            <span *ngIf="SignupForm.get('fname').errors.required">
+                                *(Required)
+                                <br/>
+                            </span>
+                            <span *ngIf="!SignupForm.controls.fname.valid">
+                                
+                                Characters Only!!
+                            </span>
+      </span>
+<!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="Last Name" #lname formControlName="lname"></ion-input>
       </ion-row>
+<span class="help-block" *ngIf="(SignupForm.get('lname').touched || 
+                                                         SignupForm.get('lname').dirty)  &&
+                                                         SignupForm.get('lname').errors">
+                            <span *ngIf="SignupForm.get('lname').errors.required">
+                                *(Required)
+                                <br/>
+                            </span>
+                            <span *ngIf="!SignupForm.controls.lname.valid">
+                                Characters Only!!
+                            </span>
+      </span>
+<!-- ///////////////////////////  Email ////////////////////////////////// -->
       <ion-row>
         <!--<ion-input placeholder="Email" [class.invalid]="!SignupForm.controls.email.valid && (SignupForm.controls.email.dirty || submitAttempt)" formControlName="email" type="text"></ion-input>-->
-
-
         <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
-        <ion-item *ngIf="!SignupForm.controls.email.valid && !SignupForm.controls.email.pending && (SignupForm.controls.email.dirty || submitAttempt)">
+        <ion-item *ngIf="!SignupForm.controls.email.valid && 
+        !SignupForm.controls.email.pending && 
+        (SignupForm.controls.email.dirty || submitAttempt)">
           <p>Sorry, that Email can not be used!</p>
         </ion-item>
       </ion-row>
+ <!-- ///////////////////////////////////////////////////////////// -->     
       <ion-row>
         <ion-input type="password" placeholder="Password" #password formControlName="password"></ion-input>
       </ion-row>
+      <span class="help-block" *ngIf="(SignupForm.get('password').touched || 
+                                                         SignupForm.get('password').dirty)  &&
+                                                         SignupForm.get('password').errors">
+                            <span *ngIf="SignupForm.get('password').errors.required">
+                                *(Required)
+                                <br/>
+                            </span>
+                            <span *ngIf="!SignupForm.controls.password.valid">
+                                Password Should be 4 characters at least.
+                            </span>
+      </span>
+<!-- ///////////////////////////////////////////////////////////// --> 
       <ion-row>
         <ion-input type="text" placeholder="Telephone" #telephone formControlName="telephone"></ion-input>
       </ion-row>
+       <span class="help-block" *ngIf="(SignupForm.get('telephone').touched || 
+                                                         SignupForm.get('telephone').dirty)  &&
+                                                         SignupForm.get('telephone').errors">
+                            <span *ngIf="SignupForm.get('telephone').errors.required">
+                                *(Required)
+                                <br/>
+                            </span>
+                            <span *ngIf="!SignupForm.controls.telephone.valid">
+                                should start with 01, Numbers Only
+                            </span>
+      </span>
+<!-- ///////////////////////////////////////////////////////////// --> 
       <ion-row>
         <ion-input type="text" placeholder="Address" #address formControlName="address"></ion-input>
       </ion-row>
+       <span class="help-block" *ngIf="(SignupForm.get('address').touched || 
+                                                         SignupForm.get('address').dirty)  &&
+                                                         SignupForm.get('address').errors">
+                            <span *ngIf="SignupForm.get('address').errors.required">
+                                *(Required)
+                                <br/>
+                            </span>
+      </span>
+<!-- ///////////////////////////////////////////////////////////// -->
       <br/>
       <br/>
       <ion-row>

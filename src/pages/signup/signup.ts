@@ -1,23 +1,16 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-
+import { Storage } from '@ionic/Storage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import firebase from 'firebase';
 import { EmailValidator } from '../shared/validator'
 import { TrackApi, IParent, Role } from '../shared/track-api.service'
-/**
- * Generated class for the SignupPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 
 @Component({
   selector: 'page-signup',
-  templateUrl: 'signup.html',
+  templateUrl: 'signup.html'
 })
 //
 export class SignupPage {
@@ -49,15 +42,16 @@ export class SignupPage {
     public cam: Camera,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
+    private storage: Storage,
     private trackApi: TrackApi,
     private emailValidator:EmailValidator
   ) {
     this.SignupForm = this.formBuilder.group({
-      fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
-      password: ['', Validators.required],
-      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
+      fname: ['', Validators.compose([Validators.minLength(2),Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lname: ['', Validators.compose([Validators.minLength(2),Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],  
+      password: ['', Validators.compose([Validators.required,Validators.minLength(4)])],
+      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'),Validators.maxLength(11),,Validators.minLength(11)])],
       address: ['', Validators.compose([Validators.required])]
     });
   }
@@ -155,6 +149,7 @@ export class SignupPage {
         console.log(this.parentObj);
         this.trackApi.addParent(this.parentObj).subscribe(data => {
           if (data) {
+            this.storage.clear();
             this.navCtrl.push(LoginPage);
             loader.dismiss();
           }
