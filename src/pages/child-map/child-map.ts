@@ -119,6 +119,9 @@ export class ChildMapPage {
         this.historyObj.serviceProvider = location.serviceProvider;
         this.historyObj.timestamp = location.timestamp;
         this.historyObj.viewFlag = true;
+        //this.historyObj.coords.latitude=location.coords.latitude;
+        //this.historyObj.coords.longitude=location.coords.longitude;
+        //this.historyObj.coords.speed=location.coords.speed;
         this.trackApi.addHistory(this.historyObj).subscribe(data => {
           console.log(data);
         });
