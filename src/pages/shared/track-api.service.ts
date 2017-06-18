@@ -108,7 +108,7 @@ export class TrackApi {
                 return res.json();
             })
     }
-//////////////////////////////////////
+/////////////////////////////////////
     getHistoryByCId(key:number): Observable<IHistory[]> {
         return this.http.get(`${this.baseUrl}/histories/${key}`)
             .map((res: Response) => {

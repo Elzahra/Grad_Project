@@ -73,7 +73,8 @@ export class MyApp {
   }
   LogOut(){
     this.storage.clear();
-    this.nav.push(HomePage);
+    this.nav.setRoot(HomePage);
+    this.nav.popToRoot();
   }
 
 }

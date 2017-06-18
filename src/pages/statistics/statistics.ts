@@ -1,23 +1,55 @@
 import { Component } from '@angular/core';
-import {  NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { Storage } from '@ionic/Storage';
+import { TrackApi, IChild, Role, IParent,IHistory } from '../shared/track-api.service';
 
-/**
- * Generated class for the StatisticsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+declare var google: any;
+
 @Component({
   selector: 'page-statistics',
   templateUrl: 'statistics.html',
 })
 export class StatisticsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+placesService: any;
+map: any;
+historyObj:IHistory[];
+locId:number=0;
+placedetails:any;
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private loadingCtrl: LoadingController,
+    private trackApi: TrackApi,
+    private storage: Storage,
+    private toastCtrl: ToastController) {
+      storage.get('child').then((val) => {
+        console.log("Statistics constructor",val);
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatisticsPage');
   }
 
+  ionViewWillEnter() {
+      let loader = this.loadingCtrl.create({
+      content: 'Loading...'
+    });
+ this.placesService = new google.maps.places.PlacesService(this.map);
+    loader.present().then(() => {
+      this.storage.get('child').then((val) => {
+        console.log("ionViewWillEnter",val);
+        console.log("value of child",val.id);
+           this.trackApi.getHistoryByCId(val.id).subscribe(data => {              
+              this.historyObj=data
+              console.log("this.historyObj data ",this.historyObj);
+              
+
+
+              
+              loader.dismiss();
+           });
+       });
+    });
+  }
+  
 }
