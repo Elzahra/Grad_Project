@@ -8,18 +8,33 @@
 
 
 <ion-content padding>
-<h2>Statistics</h2>
-<ion-item *ngFor="let history of historyObj">
-  <h1>latitude</h1>
-  <ion-item>{{history.latitude}}</ion-item>
-  <h1>longitude</h1>
-  <ion-item>{{history.longitude}}</ion-item>
-  <h1>speed</h1>
-  <ion-item>{{history.speed}}</ion-item>
-  <h1>locationId</h1>
-  <ion-item >{{history.locationId}}</ion-item>
-  <h1>time</h1>
-  <ion-item>{{history.time}}</ion-item>
-  <br/>
-</ion-item>
+  <agm-map
+      *ngFor="let history of historyList"
+      [latitude]="history.latitude"
+      [longitude]="history.longitude"
+      [zoom]="15"
+      [disableDefaultUI]="true"
+      [zoomControl]="true"
+      >
+    
+      <agm-marker 
+          [latitude]="history.latitude"
+          [longitude]="history.longitude"
+          >
+          
+        <agm-info-window>
+          <strong>Speed {{history.speed}} Km/h</strong>
+        </agm-info-window>
+        
+      </agm-marker>
+      
+
+
+    </agm-map>
+
+
+
+
+ 
+
 </ion-content>
