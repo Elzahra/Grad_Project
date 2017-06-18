@@ -12,7 +12,7 @@ declare var google: any;
 export class StatisticsPage {
 placesService: any;
 map: any;
-historyObj:IHistory[];
+historyList:IHistory[];
 locId:number=0;
 placedetails:any;
   constructor(public navCtrl: NavController,
@@ -40,12 +40,8 @@ placedetails:any;
         console.log("ionViewWillEnter",val);
         console.log("value of child",val.id);
            this.trackApi.getHistoryByCId(val.id).subscribe(data => {              
-              this.historyObj=data
-              console.log("this.historyObj data ",this.historyObj);
-              
-
-
-              
+              this.historyList=data
+              console.log("this.historyObj data ",this.historyList);
               loader.dismiss();
            });
        });
