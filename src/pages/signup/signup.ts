@@ -101,8 +101,7 @@ export class SignupPage {
 
     let loader = this.loadingCtrl.create({
       content: 'Signing Up...',
-      duration: 5000,
-      // dismissOnPageChange: true
+      
     });
     loader.present().then(() => {
       if (this.captureDataUrl != "") {
@@ -115,8 +114,6 @@ export class SignupPage {
 
         imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
           // Do something here when the data is succesfully uploaded!
-
-
           this.parentObj.fname = this.SignupForm.value.fname;
           this.parentObj.lname = this.SignupForm.value.lname;
           this.parentObj.email = this.SignupForm.value.email;
@@ -124,42 +121,28 @@ export class SignupPage {
           this.parentObj.telephone = this.SignupForm.value.telephone;
           this.parentObj.address.city = this.SignupForm.value.address;
           this.parentObj.imageUrl = snapshot.downloadURL;
-          //console.log(this.parentObj);
-        });
-
-        this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
+          this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
           if (data) {
             console.log("validateEmail>>>>",data)
-            this.SignupForm.invalid;
-            this.SignupForm.controls.email.invalid;
             this.isUnique="This Email is Already Registered";
             this.msg="";
             loader.dismiss();
           }
           else {
             this.isUnique=""
-           
             this.trackApi.addParent(this.parentObj).subscribe(data => {
               if (data) {
-                this.navCtrl.push(LoginPage);
                 loader.dismiss();
+                this.navCtrl.push(LoginPage);
               }
               else {
-                this.msg = 'Somting Went Wrong.. Try Again';
                 loader.dismiss();
+                this.msg = 'Somting Went Wrong.. Try Again';
               }
             })
-
-
           }
-
-
-
         })
-
-
-
-
+        });
 
       }
       else {
@@ -170,7 +153,7 @@ export class SignupPage {
         this.parentObj.telephone = this.SignupForm.value.telephone;
         this.parentObj.address.city = this.SignupForm.value.address;
         this.parentObj.imageUrl = null;
-        //console.log(this.parentObj);
+        
            
             
         this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
