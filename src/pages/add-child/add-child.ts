@@ -5,7 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
 import { Storage } from '@ionic/Storage';
 import { TrackApi, IChild, Role, IParent } from '../shared/track-api.service'
-import { MyChildPage} from '../my-child/my-child';
+import { MyChildPage } from '../my-child/my-child';
 
 @Component({
   selector: 'page-add-child',
@@ -13,7 +13,7 @@ import { MyChildPage} from '../my-child/my-child';
 })
 export class AddChildPage {
 
-
+  isUnique: string = "";
   private captureDataUrl: string = "";
   SignupForm: FormGroup;
   ChildObj: IChild = {
@@ -47,7 +47,7 @@ export class AddChildPage {
     private toastCtrl: ToastController
   ) {
     this.SignupForm = this.formBuilder.group({
-      fname: ['', Validators.compose([Validators.minLength(2),Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      fname: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
       password: ['', Validators.compose([Validators.minLength(4), Validators.required])],
       telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(11), Validators.maxLength(11)])],
@@ -102,10 +102,8 @@ export class AddChildPage {
   //////////////////////////////////////////////////////////////////
 
   GoToAddChild() {
-    let loader = this.loadingCtrl.create({
+     let loader = this.loadingCtrl.create({
       content: 'Adding Child...',
-      duration: 5000,
-      dismissOnPageChange: true
     });
     loader.present().then(() => {
       if (this.captureDataUrl != "") {
@@ -127,20 +125,53 @@ export class AddChildPage {
           this.ChildObj.parent_Id = this.parentObj.id;
           this.ChildObj.imageUrl = snapshot.downloadURL;
           console.log(this.ChildObj);
+          this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
+            if (data) {
+              console.log("validateEmail>>>>", data)
+              this.isUnique = "This Email is Already Registered";
+              this.msg = "";
+              loader.dismiss();
+            }
+            else {
+              this.isUnique = ""
+              this.trackApi.addChild(this.ChildObj).subscribe(data => {
+                if (data) {
+                  loader.dismiss();
+                  this.parentObj.childs.push(this.ChildObj);
+                  this.storage.set('parent', this.parentObj);
+                  let toast = this.toastCtrl.create({
+                    message: 'Your child was added successfully',
+                    duration: 1500,
+                    position: 'middle'
+                  });
+                  toast.onDidDismiss(() => {
+                    console.log('Dismissed toast', this.parentObj.id);
+                    let prnt_id = this.parentObj.id;
+                    this.trackApi.getParentsById(prnt_id).subscribe(Pdata => {
+                      console.log("parent val <<<<<<<<>>>>>", Pdata);
+                      this.storage.clear();
+                      this.storage.set('parent', Pdata);
+                      this.navCtrl.popToRoot();
+                      //this.navCtrl.push(MyChildPage);
+                    });//getParentsById
+                  });
+
+                  toast.present();
+
+                  this.SignupForm.reset();
+                }
+                else {
+                  this.msg = 'Somting Went Wrong.. Try Again';
+                  loader.dismiss();
+                }
+
+              })
+            }
+          })
+
+
         });
 
-        this.trackApi.addChild(this.ChildObj).subscribe(data => {
-          if (data) {
-
-            loader.dismiss();
-
-            this.SignupForm.reset();
-          }
-          else {
-            this.msg = 'Somting Went Wrong.. Try Again';
-            loader.dismiss();
-          }
-        })
       }
       ///////////////////////////////
       else {
@@ -156,36 +187,47 @@ export class AddChildPage {
         this.ChildObj.imageUrl = null;
         //"https://upload.wikimedia.org/wikipedia/en/9/9d/Kids_film.jpg";
         console.log(this.ChildObj);
-        this.trackApi.addChild(this.ChildObj).subscribe(data => {
+        this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
           if (data) {
-
+            console.log("validateEmail>>>>", data)
+            this.isUnique = "This Email is Already Registered";
+            this.msg = "";
             loader.dismiss();
-            this.parentObj.childs.push(this.ChildObj);
-            this.storage.set('parent', this.parentObj);
-            let toast = this.toastCtrl.create({
-              message: 'Your child was added successfully',
-              duration: 1500,
-              position: 'middle'
-            });
-            toast.onDidDismiss(() => {
-              console.log('Dismissed toast',this.parentObj.id);
-              let prnt_id =this.parentObj.id;
-                    this.trackApi.getParentsById(prnt_id).subscribe(Pdata=>{  
-                    console.log("parent val <<<<<<<<>>>>>",Pdata);   
-                    this.storage.clear();                                   
-                    this.storage.set('parent', Pdata);        
-                    this.navCtrl.popToRoot();
-                    //this.navCtrl.push(MyChildPage);
-                    });//getParentsById
-            });
-
-            toast.present();
-
-            this.SignupForm.reset();
           }
           else {
-            this.msg = 'Somting Went Wrong.. Try Again';
-            loader.dismiss();
+            this.isUnique = ""
+            this.trackApi.addChild(this.ChildObj).subscribe(data => {
+              if (data) {
+                loader.dismiss();
+                this.parentObj.childs.push(this.ChildObj);
+                this.storage.set('parent', this.parentObj);
+                let toast = this.toastCtrl.create({
+                  message: 'Your child was added successfully',
+                  duration: 1500,
+                  position: 'middle'
+                });
+                toast.onDidDismiss(() => {
+                  console.log('Dismissed toast', this.parentObj.id);
+                  let prnt_id = this.parentObj.id;
+                  this.trackApi.getParentsById(prnt_id).subscribe(Pdata => {
+                    console.log("parent val <<<<<<<<>>>>>", Pdata);
+                    this.storage.clear();
+                    this.storage.set('parent', Pdata);
+                    this.navCtrl.popToRoot();
+                    //this.navCtrl.push(MyChildPage);
+                  });//getParentsById
+                });
+
+                toast.present();
+
+                this.SignupForm.reset();
+              }
+              else {
+                this.msg = 'Somting Went Wrong.. Try Again';
+                loader.dismiss();
+              }
+
+            })
           }
         })
       }

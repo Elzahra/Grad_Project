@@ -56,8 +56,7 @@ export class LoginPage {
     console.log(email + " - " + pass)
     let loader = this.loadingCtrl.create({
       content: 'Logging In...',
-      duration: 5000,
-      dismissOnPageChange: true
+     
     });
 
     loader.present().then(() => {
@@ -68,6 +67,7 @@ export class LoginPage {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();
           this.storage.set('parent',this.selectedParent);
+          loader.dismiss();
           this.navCtrl.setRoot(MyChildPage);
           this.navCtrl.popToRoot();
         }
