@@ -162,10 +162,6 @@ export class AddChildPage {
             loader.dismiss();
             this.parentObj.childs.push(this.ChildObj);
             this.storage.set('parent', this.parentObj);
-            
-            
-
-
             let toast = this.toastCtrl.create({
               message: 'Your child was added successfully',
               duration: 1500,
