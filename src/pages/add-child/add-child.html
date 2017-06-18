@@ -30,11 +30,11 @@
                             <span *ngIf="SignupForm.get('fname').errors.required">
                                 *(Required)
                             </span>
-                              <span *ngIf="!SignupForm.controls.fname.valid">                              
+      <span *ngIf="!SignupForm.controls.fname.valid">                              
                                 Characters Only!!
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
         <ion-item *ngIf="!SignupForm.controls.email.valid && 
@@ -43,41 +43,44 @@
           <p>Sorry, that Email can not be used!</p>
         </ion-item>
       </ion-row>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <ion-row>
+        <label class="mesg">{{isUnique}}</label>
+      </ion-row>
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="password" placeholder="Password" #password formControlName="password"></ion-input>
       </ion-row>
-       <span class="help-block" *ngIf="(SignupForm.get('password').touched || 
+      <span class="help-block" *ngIf="(SignupForm.get('password').touched || 
                                                          SignupForm.get('password').dirty)  &&
                                                          SignupForm.get('password').errors">
                             <span *ngIf="SignupForm.get('password').errors.required">
                                 *(Required)
                                 <br/>
                             </span>
-                            <span *ngIf="!SignupForm.controls.password.valid">
+      <span *ngIf="!SignupForm.controls.password.valid">
                                 Password Should be 4 characters at least.
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="Telephone" #telephone formControlName="telephone"></ion-input>
       </ion-row>
-       <span class="help-block" *ngIf="(SignupForm.get('telephone').touched || 
+      <span class="help-block" *ngIf="(SignupForm.get('telephone').touched || 
                                                          SignupForm.get('telephone').dirty)  &&
                                                          SignupForm.get('telephone').errors">
                             <span *ngIf="SignupForm.get('telephone').errors.required">
                                 *(Required)
                                 <br/>
                             </span>
-                            <span *ngIf="!SignupForm.controls.telephone.valid">
+      <span *ngIf="!SignupForm.controls.telephone.valid">
                                 Numbers Only, should be 11 Numbers
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="Street" #street formControlName="street"></ion-input>
       </ion-row>
-       <span class="help-block" *ngIf="(SignupForm.get('street').touched || 
+      <span class="help-block" *ngIf="(SignupForm.get('street').touched || 
                                                          SignupForm.get('street').dirty)  &&
                                                          SignupForm.get('street').errors">
                             <span *ngIf="SignupForm.get('street').errors.required">
@@ -85,11 +88,11 @@
                                 <br/>
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="City" #city formControlName="city"></ion-input>
       </ion-row>
-       <span class="help-block" *ngIf="(SignupForm.get('city').touched || 
+      <span class="help-block" *ngIf="(SignupForm.get('city').touched || 
                                                          SignupForm.get('city').dirty)  &&
                                                          SignupForm.get('city').errors">
                             <span *ngIf="SignupForm.get('city').errors.required">
@@ -97,11 +100,11 @@
                                 <br/>
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <ion-row>
         <ion-input type="text" placeholder="Country" #country formControlName="country"></ion-input>
       </ion-row>
-       <span class="help-block" *ngIf="(SignupForm.get('country').touched || 
+      <span class="help-block" *ngIf="(SignupForm.get('country').touched || 
                                                          SignupForm.get('country').dirty)  &&
                                                          SignupForm.get('country').errors">
                             <span *ngIf="SignupForm.get('country').errors.required">
@@ -109,7 +112,7 @@
                                 <br/>
                             </span>
       </span>
-<!-- ///////////////////////////////////////////////////////////// -->
+      <!-- ///////////////////////////////////////////////////////////// -->
       <br/>
       <br/>
       <ion-row>

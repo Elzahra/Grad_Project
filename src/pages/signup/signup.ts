@@ -114,6 +114,7 @@ export class SignupPage {
 
         imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
           // Do something here when the data is succesfully uploaded!
+          
           this.parentObj.fname = this.SignupForm.value.fname;
           this.parentObj.lname = this.SignupForm.value.lname;
           this.parentObj.email = this.SignupForm.value.email;
