@@ -18,6 +18,7 @@ export class ParentProfilePage {
   city: string = '';
   country: string = '';
   selectedParent: any = [];
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private loadingCtrl: LoadingController) {
     storage.get('parent').then((val) => {
       console.log('parent profile ', val);
