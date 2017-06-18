@@ -61,11 +61,11 @@ export class EditProfilePage {
     });
 
     this.profileForm = this.formBuilder.group({
-      fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
-      lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
-      email: ['', Validators.compose([Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
-      password: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(11)])],
-      telephone: ['', Validators.compose([Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
+      fname: ['', Validators.compose([ Validators.required,Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*')])],
+      lname: ['', Validators.compose([ Validators.required,Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
+      email: ['', Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
+      password: ['', Validators.compose([Validators.required,Validators.minLength(4), Validators.maxLength(30)])],
+      telephone: ['', Validators.compose([Validators.required,Validators.pattern('^01([0-9]*)$'), Validators.minLength(11), Validators.maxLength(11)])],
       street: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(11)])],
       city: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
       country: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])]
@@ -163,13 +163,11 @@ export class EditProfilePage {
         // imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
           
 
-
-
           this.trackApi.UpdateParent(this.parentObj).subscribe(data => {
             if (data) {
-              console.log("inside update parent function");
+              console.log("inside update parent function",data);
               this.storage.clear();
-              this.storage.set('parent', this.parentObj);
+              this.storage.set('parent', data);
               this.navCtrl.push(ParentProfilePage);
               loader.dismiss();
 

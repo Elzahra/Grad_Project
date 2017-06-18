@@ -26,35 +26,36 @@ export class MyChildPage {
   }
 
   ionViewWillEnter() {
-    // let loader = this.loadingCtrl.create({
-    //   content: 'Loading...'
-    //   //dismissOnPageChange: true
-    // });
-    // loader.present().then(() => {
-    //   this.storage.get('parent').then((val) => {
-    //     this.selectedParent = val;
-    //     this.children = this.selectedParent.childs;
-    //     loader.dismiss();
-    //   });
-    // })
-  }
-  ////////////////////////////////
-  ionViewDidLoad() {
-      let loader = this.loadingCtrl.create({
-      content: 'Loading...',
-      dismissOnPageChange: true
+    let loader = this.loadingCtrl.create({
+      content: 'Loading...'
+      //dismissOnPageChange: true
     });
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
-//this.trackapi.getParentsById(val.id).subscribe(Pdata=>{
+        console.log("parent val", val);
         this.selectedParent = val;
         this.children = this.selectedParent.childs;
-       loader.dismiss();
-//})
-      
-
+        loader.dismiss();
       });
     })
+  }
+  ////////////////////////////////
+  ionViewDidLoad() {
+//       let loader = this.loadingCtrl.create({
+//       content: 'Loading...',
+      
+//     });
+//     loader.present().then(() => {
+//       this.storage.get('parent').then((val) => {
+// //this.trackapi.getParentsById(val.id).subscribe(Pdata=>{
+//         this.selectedParent = val;
+//         this.children = this.selectedParent.childs;
+//        loader.dismiss();
+// //})
+      
+
+//       });
+//     })
   }
   //
   ItemChild($event, item) {

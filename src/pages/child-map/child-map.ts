@@ -129,6 +129,7 @@ export class ChildMapPage {
         this.speed = location.speed ? location.speed * 3.6 : 0
       }
 
+
     })
 
   }

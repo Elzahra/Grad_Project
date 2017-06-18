@@ -6,12 +6,7 @@ import firebase from 'firebase';
 import { Storage } from '@ionic/Storage';
 import { TrackApi, IChild, Role, IParent } from '../shared/track-api.service'
 import { MyChildPage} from '../my-child/my-child';
-/**
- * Generated class for the AddChildPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @Component({
   selector: 'page-add-child',
   templateUrl: 'add-child.html',
@@ -52,11 +47,10 @@ export class AddChildPage {
     private toastCtrl: ToastController
   ) {
     this.SignupForm = this.formBuilder.group({
-      fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      //lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      fname: ['', Validators.compose([Validators.minLength(2),Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
-      password: ['', Validators.required],
-      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
+      password: ['', Validators.compose([Validators.minLength(4), Validators.required])],
+      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(11), Validators.maxLength(11)])],
       city: ['', Validators.compose([Validators.required])],
       street: ['', Validators.compose([Validators.required])],
       country: ['', Validators.compose([Validators.required])]
@@ -109,7 +103,7 @@ export class AddChildPage {
 
   GoToAddChild() {
     let loader = this.loadingCtrl.create({
-      content: 'Signing Up...',
+      content: 'Adding Child...',
       duration: 5000,
       dismissOnPageChange: true
     });
@@ -169,11 +163,12 @@ export class AddChildPage {
             this.parentObj.childs.push(this.ChildObj);
             this.storage.set('parent', this.parentObj);
             
+            
 
 
             let toast = this.toastCtrl.create({
               message: 'Your child was added successfully',
-              duration: 2000,
+              duration: 1500,
               position: 'middle'
             });
             toast.onDidDismiss(() => {
@@ -184,6 +179,7 @@ export class AddChildPage {
                     this.storage.clear();                                   
                     this.storage.set('parent', Pdata);        
                     this.navCtrl.popToRoot();
+                    //this.navCtrl.push(MyChildPage);
                     });//getParentsById
             });
 

@@ -6,9 +6,10 @@ import firebase from 'firebase';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MyChildPage } from '../pages/my-child/my-child';
-import { AddChildPage } from '../pages/add-child/add-child'
-import { ParentProfilePage } from '../pages/parent-profile/parent-profile'
-import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete'
+import { AddChildPage } from '../pages/add-child/add-child';
+import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
+import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
+import { Storage } from '@ionic/Storage';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,7 +20,7 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private storage: Storage,) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -69,6 +70,10 @@ export class MyApp {
   }
   goHome(){
     this.nav.popToRoot();
+  }
+  LogOut(){
+    this.storage.clear();
+    this.nav.push(HomePage);
   }
 
 }
