@@ -178,6 +178,17 @@ export class TrackApi {
             })
     }
 //////////////////////////////////
+   validatechildEmail(body: string): Observable<IParent> {
+        let bodyString = JSON.stringify(body);
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        return this.http.post(`${this.baseUrl}/child/GetByEmail`, bodyString, { headers: headers })
+
+            .map((res: Response) => {
+                console.log("Response From Api: " + res.json());
+                return res.json();
+            })
+    }
+//////////////////////////////////
  DeleteChild (id:string): Observable<Comment[]> {
         return this.http.delete(`${this.baseUrl}/Child/${id}`) 
                          //.map((res:Response) => res.json())
