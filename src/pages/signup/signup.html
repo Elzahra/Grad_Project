@@ -17,7 +17,7 @@
   <ion-row>
     <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
   </ion-row>
-  
+
   <form [formGroup]="SignupForm" (ngSubmit)="GoToAddChild()">
     <ion-grid>
       <ion-row>
@@ -32,8 +32,10 @@
 
         <ion-input type="text" placeholder="Email" #email formControlName="email"></ion-input>
         <ion-item *ngIf="!SignupForm.controls.email.valid && !SignupForm.controls.email.pending && (SignupForm.controls.email.dirty || submitAttempt)">
-          <p>Sorry, that Email can not be used!</p>
         </ion-item>
+      </ion-row>
+      <ion-row>
+        <label class="mesg">{{isUnique}}</label>
       </ion-row>
       <ion-row>
         <ion-input type="password" placeholder="Password" #password formControlName="password"></ion-input>

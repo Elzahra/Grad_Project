@@ -5,7 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import firebase from 'firebase';
-import { EmailValidator } from '../shared/validator'
+
 import { TrackApi, IParent, Role } from '../shared/track-api.service'
 /**
  * Generated class for the SignupPage page.
@@ -42,25 +42,26 @@ export class SignupPage {
   };
   msg: string = "";
   afterUpload: string;
-
+  isUnique:string="";
   //
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public cam: Camera,
     private loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
-    private trackApi: TrackApi,
-    private emailValidator:EmailValidator
+    private trackApi: TrackApi
   ) {
     this.SignupForm = this.formBuilder.group({
       fname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       lname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])],
       password: ['', Validators.required],
-      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(1), Validators.maxLength(11)])],
+      telephone: ['', Validators.compose([Validators.required, Validators.pattern('^01([0-9]*)$'), Validators.minLength(11), Validators.maxLength(11)])],
       address: ['', Validators.compose([Validators.required])]
     });
   }
+
+
   //
   openGallery(): void {
     let cameraOptions = {
@@ -105,7 +106,7 @@ export class SignupPage {
     let loader = this.loadingCtrl.create({
       content: 'Signing Up...',
       duration: 5000,
-      dismissOnPageChange: true
+      // dismissOnPageChange: true
     });
     loader.present().then(() => {
       if (this.captureDataUrl != "") {
@@ -127,19 +128,40 @@ export class SignupPage {
           this.parentObj.telephone = this.SignupForm.value.telephone;
           this.parentObj.address.city = this.SignupForm.value.address;
           this.parentObj.imageUrl = snapshot.downloadURL;
-          console.log(this.parentObj);
+          //console.log(this.parentObj);
         });
 
-        this.trackApi.addParent(this.parentObj).subscribe(data => {
+        this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
           if (data) {
-            this.navCtrl.push(LoginPage);
+            console.log("validateEmail>>>>",data)
+            this.SignupForm.invalid;
+            this.SignupForm.controls.email.invalid;
+            this.isUnique="This Email is Already Registered";
+            this.msg="";
             loader.dismiss();
           }
           else {
-            this.msg = 'Somting Went Wrong.. Try Again';
-            loader.dismiss();
+            this.isUnique=""
+           
+            this.trackApi.addParent(this.parentObj).subscribe(data => {
+              if (data) {
+                this.navCtrl.push(LoginPage);
+                loader.dismiss();
+              }
+              else {
+                this.msg = 'Somting Went Wrong.. Try Again';
+                loader.dismiss();
+              }
+            })
+
+
           }
+
+
+
         })
+
+
 
 
 
@@ -152,7 +174,22 @@ export class SignupPage {
         this.parentObj.telephone = this.SignupForm.value.telephone;
         this.parentObj.address.city = this.SignupForm.value.address;
         this.parentObj.imageUrl = null;
-        console.log(this.parentObj);
+        //console.log(this.parentObj);
+           
+            
+        this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
+          if (data) {
+           
+            console.log("validateEmail>>>>",data)
+            this.SignupForm.invalid;
+            this.SignupForm.controls.email.valid
+            this.isUnique="This Email is Already Registered";
+            this.msg="";
+            loader.dismiss();
+          }
+          else {
+            this.isUnique=""
+            
         this.trackApi.addParent(this.parentObj).subscribe(data => {
           if (data) {
             this.navCtrl.push(LoginPage);
@@ -163,6 +200,21 @@ export class SignupPage {
             loader.dismiss();
           }
         })
+
+
+          }
+
+
+
+        })
+
+
+
+
+
+
+
+
 
       }
 

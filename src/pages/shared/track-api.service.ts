@@ -107,6 +107,13 @@ export class TrackApi {
                 return res.json();
             })
     }
+//////////////////////////////////////
+    getHistoryByCId(key:number): Observable<IHistory[]> {
+        return this.http.get(`${this.baseUrl}/histories/${key}`)
+            .map((res: Response) => {
+                return res.json();
+            })
+    }
 ///////////////////////////////////
     getChildren(): Observable<IChild[]> {
         return this.http.get(`${this.baseUrl}/Child`)
@@ -160,8 +167,9 @@ export class TrackApi {
     }
 ////////////////////////////////////
     validateEmail(body: string): Observable<IParent> {
+        let bodyString = JSON.stringify(body);
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-        return this.http.post(`${this.baseUrl}/parent`, body, { headers: headers })
+        return this.http.post(`${this.baseUrl}/parent/GetByEmail`, bodyString, { headers: headers })
             .map((res: Response) => {
                 console.log("Response From Api: " + res.json());
                 return res.json();
