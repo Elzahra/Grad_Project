@@ -84,13 +84,7 @@ export class ChildMapPage {
     })
     this.socket.on('message', location => {
       //this.messages.push(data);
-<<<<<<< HEAD
-      console.log("message latitude>>>>",data.latitude)
-      this.locationFlag=data;
-      this.lat=data.latitude;
-      this.lng=data.longitude;
-      this.speed= data.speed ? data.speed*3.6 : 0
-=======
+
       console.log("message latitude>>>>",location.latitude)
       
       this.historyObj.accuracy=location.accuracy;
@@ -113,7 +107,7 @@ export class ChildMapPage {
       this.lat=location.latitude;
       this.lng=location.longitude;
       this.speed= location.speed ? location.speed*3.6 : 0
->>>>>>> a76ac8c228670c8382b44083ceff37455d784e89
+
       
     })
 
