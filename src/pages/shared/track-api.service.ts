@@ -18,6 +18,31 @@ export interface ILocation {
     parent_key: number;
 }
 
+export interface IHistory{
+  locationId?: number;
+  serviceProvider: String;
+  debug: boolean;
+  time: number;
+  accuracy: number;
+  speed: number;
+  longitude: number;
+  latitude: number;
+  altitude: number;
+  altitudeAccuracy: number;
+  bearing: number;
+  timestamp: number;
+  child_Id: number;
+  coords: {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    speed: number;
+    accuracy: number;
+    altitudeAccuracy: number;
+    heading: number;
+  };
+  viewFlag: boolean;
+}
 export interface IParent {
 
     id?: number;
@@ -136,7 +161,9 @@ export class TrackApi {
 ////////////////////////////////////
     validateEmail(body: string): Observable<IParent> {
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+
         return this.http.post(`${this.baseUrl}/parent?${body}`, body, { headers: headers })
+
             .map((res: Response) => {
                 console.log("Response From Api: " + res.json());
                 return res.json();
@@ -147,5 +174,16 @@ export class TrackApi {
         return this.http.delete(`${this.baseUrl}/Child/${id}`) 
                          //.map((res:Response) => res.json())
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
-    }   
+    }
+ //////////////////////////////////////////////////////////////////
+ addHistory(body: IHistory): Observable<IHistory> {
+        let bodyString = JSON.stringify(body); // Stringify payload
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        return this.http.post(`${this.baseUrl}/histories`, bodyString, { headers: headers })
+            .map((res: Response) => {
+                console.log("Response From Api: " + res.json());
+                return res.json();
+            })
+    }
+
 }
