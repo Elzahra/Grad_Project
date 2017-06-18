@@ -91,7 +91,7 @@ export class ChildMapPage {
     loader.present().then(() => {
       this.trackApi.getHistoryByCId(this.childObj.id).subscribe(data => {
         if (data) {
-          let lastLoc = _.last(data);
+          let lastLoc = _.first(data);
           console.log("LastLocation>>>", lastLoc);
           if (lastLoc != undefined) {
             this.locationFlag = lastLoc;
