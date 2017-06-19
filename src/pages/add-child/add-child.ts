@@ -102,7 +102,7 @@ export class AddChildPage {
   //////////////////////////////////////////////////////////////////
 
   GoToAddChild() {
-    let loader = this.loadingCtrl.create({
+     let loader = this.loadingCtrl.create({
       content: 'Adding Child...',
     });
     loader.present().then(() => {
@@ -125,7 +125,7 @@ export class AddChildPage {
           this.ChildObj.parent_Id = this.parentObj.id;
           this.ChildObj.imageUrl = snapshot.downloadURL;
           console.log(this.ChildObj);
-          this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
+          this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
             if (data) {
               console.log("validateEmail>>>>", data)
               this.isUnique = "This Email is Already Registered";
@@ -187,7 +187,7 @@ export class AddChildPage {
         this.ChildObj.imageUrl = null;
         //"https://upload.wikimedia.org/wikipedia/en/9/9d/Kids_film.jpg";
         console.log(this.ChildObj);
-        this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
+        this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
           if (data) {
             console.log("validateEmail>>>>", data)
             this.isUnique = "This Email is Already Registered";
