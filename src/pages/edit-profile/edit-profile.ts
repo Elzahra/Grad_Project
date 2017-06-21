@@ -225,6 +225,12 @@ export class EditProfilePage {
               break;
           }
 
+<<<<<<< HEAD
         }))
+=======
+      }))
+      
+});
+>>>>>>> 6957abdafab135e3807047f080b2c9f73c252d3d
   }
 }//class
