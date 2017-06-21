@@ -10,6 +10,8 @@ import { AddChildPage } from '../pages/add-child/add-child';
 import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { Storage } from '@ionic/Storage';
+import { Push } from '@ionic/cloud-angular';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -20,7 +22,7 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private storage: Storage,) {
+  constructor(public platform: Platform, public statusBar: StatusBar,private push: Push, public splashScreen: SplashScreen,private storage: Storage,) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -35,6 +37,15 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+              this.push.register().then(token => {
+          alert(JSON.stringify(token));
+        });
+      this.push.rx.notification().subscribe(msg => {
+        this.push.register().then(token => {
+          alert(JSON.stringify(token));
+        });
+        alert(msg.title);
+      });
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 

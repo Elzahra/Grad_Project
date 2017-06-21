@@ -29,7 +29,7 @@ import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { ModalAutocompleteItems } from '../pages/modal-autocomplete-items/modal-autocomplete-items';
 import { AgmCoreModule } from '@agm/core';
-//import { CloudModule, CloudSettings } from '@ionic/cloud-angular';
+import { CloudModule } from '@ionic/cloud-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 // const cloudSettings: CloudSettings = {
@@ -69,7 +69,24 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    //CloudModule.forRoot(cloudSettings),
+    CloudModule.forRoot({
+  'core': {
+    'app_id': 'APP_ID',
+  },
+  'push': {
+    'sender_id': 'SENDER_ID',
+    'pluginConfig': {
+      'ios': {
+        'badge': true,
+        'sound': true
+      },
+      'android': {
+        'iconColor': '#343434',
+        'sound':true
+      }
+    }
+  }
+}),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyD147jg0SjU32sglPT4qfi2VfGcL1EC364'
     })

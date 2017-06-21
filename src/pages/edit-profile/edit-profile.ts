@@ -55,10 +55,6 @@ export class EditProfilePage {
     private toastCtrl: ToastController,
     public cam: Camera,
     private formBuilder: FormBuilder) {
-    storage.get('parent').then((val) => {
-      console.log('parent profileeeeeee ', val);
-      this.selectedParent = val;
-    });
 
     this.profileForm = this.formBuilder.group({
       fname: ['', Validators.compose([Validators.required, Validators.maxLength(15), Validators.pattern('[a-zA-Z ]*')])],
@@ -136,8 +132,6 @@ export class EditProfilePage {
     console.log("inside DoneEditProfile method");
     let loader = this.loadingCtrl.create({
       content: 'Loading ...',
-      duration: 5000,
-      dismissOnPageChange: true
     });
 if (this.captureDataUrl != "") {
     let storageRef = firebase.storage().ref();
@@ -176,8 +170,9 @@ else{
           console.log("inside update parent function", data);
           this.storage.clear();
           this.storage.set('parent', data);
-          this.navCtrl.push(ParentProfilePage);
           loader.dismiss();
+          this.navCtrl.push(ParentProfilePage);
+          
 
           let toast = this.toastCtrl.create({
             message: 'Your data is updated successfully',
@@ -191,10 +186,38 @@ else{
           toast.present();
 
         }
-        else {
-          loader.dismiss();
+      },(err=>{
+        loader.dismiss();
+        let toast;
+        switch (err.status) {
+          case 400:
+          toast = this.toastCtrl.create({
+            message: 'Invalid Data ',
+            duration: 2500,
+            position: 'middle'
+          });
+          toast.present();
+            break;
+          case 404:
+         toast = this.toastCtrl.create({
+            message: 'Not Found',
+            duration: 2500,
+            position: 'middle'
+          });
+          toast.present();
+            break;
+        
+          default:
+          toast = this.toastCtrl.create({
+            message: 'Connection TimeOut',
+            duration: 2500,
+            position: 'middle'
+          });
+          toast.present();
+            break;
         }
-      })
+
+      }))
       }
 });
   }
