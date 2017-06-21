@@ -20,6 +20,11 @@
 <ion-content padding>
   <!--<form [formGroup]="profileForm" (ngSubmit)="editProfile()">-->
   <ion-grid id="grid">
+ <ion-row>
+    <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
+  </ion-row>
+
+
     <ion-row>
       <ion-col>
         <label class="lbl_fixed">First Name</label>

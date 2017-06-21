@@ -9,6 +9,8 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
 })
 
 export class ParentProfilePage {
+
+
   fname: string = '';
   lname: string = '';
   email: string = ''
@@ -17,6 +19,7 @@ export class ParentProfilePage {
   street: string = '';
   city: string = '';
   country: string = '';
+  private captureDataUrl: string = '';
   selectedParent: any = [];
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private loadingCtrl: LoadingController) {
@@ -31,6 +34,7 @@ export class ParentProfilePage {
     });
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
+        console.log("pppppppppppppppp",val);
         this.fname = val.fname;
         this.lname = val.lname;
         this.email = val.email;
@@ -39,6 +43,7 @@ export class ParentProfilePage {
         this.street = val.address.street;
         this.city = val.address.city;
         this.country = val.address.country;
+        this.captureDataUrl=val.imageUrl;
         loader.dismiss();
       });
     })
