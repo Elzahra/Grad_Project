@@ -8,7 +8,12 @@ export enum Role {
     Parent,
     Child
 }
+export interface ILogin{
+    
+  email: string;
+  password: string;
 
+}
 export interface ILocation {
     id?: number;
     name: string;
@@ -199,6 +204,16 @@ export class TrackApi {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
         return this.http.post(`${this.baseUrl}/histories`, bodyString, { headers: headers })
+            .map((res: Response) => {
+                console.log("Response From Api: " + res.json());
+                return res.json();
+            })
+    }
+/////////////////////////////////////////////////////////////////////////
+    loginParent(body: ILogin): Observable<IParent> {
+        let bodyString = JSON.stringify(body); // Stringify payload
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        return this.http.post(`${this.baseUrl}/Login/parent`, bodyString, { headers: headers })
             .map((res: Response) => {
                 console.log("Response From Api: " + res.json());
                 return res.json();

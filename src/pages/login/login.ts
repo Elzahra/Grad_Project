@@ -5,7 +5,7 @@ import { MyChildPage } from '../my-child/my-child';
 import { Storage } from '@ionic/Storage';
 //import { Storage } from '@ionic/storage';
 
-import { TrackApi, IParent } from '../shared/track-api.service';
+import { TrackApi, IParent, ILogin } from '../shared/track-api.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
@@ -20,11 +20,15 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class LoginPage {
 
+  login: ILogin = {
+    email: "",
+    password: ""
+  }
   loginForm: FormGroup;
   parents: Array<IParent> = [];
   //children: Array<IChild> = [];
   selectedParent: IParent;
- // selectedChild: IChild;
+  // selectedChild: IChild;
   msg: string = "";
 
   constructor(public navCtrl: NavController,
@@ -51,39 +55,68 @@ export class LoginPage {
   }
   //
   GoToMychild() {
-    let email = this.loginForm.value.email;
-    let pass = this.loginForm.value.password;
-    console.log(email + " - " + pass)
+
+
+    this.login.email = this.loginForm.value.email
+    this.login.password = this.loginForm.value.password
+    console.log(this.login);
     let loader = this.loadingCtrl.create({
       content: 'Logging In...',
-     
+
     });
 
     loader.present().then(() => {
-      this.trackApi.getParents().subscribe(data => {
-        this.parents = data;
-        this.selectedParent = this.parents.find(p => p.email.toLowerCase() == email.toLowerCase() && p.password == pass)
-        if (this.selectedParent != undefined) {
+      this.trackApi.loginParent(this.login).subscribe((data) => {
+
+        this.selectedParent = data;
+
+        if (this.selectedParent) {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();
-          this.storage.set('parent',this.selectedParent);
+          this.storage.set('parent', this.selectedParent);
           loader.dismiss();
           this.navCtrl.setRoot(MyChildPage);
           this.navCtrl.popToRoot();
         }
-        else {
-          this.msg = "Wrong Email Or Password";
-          loader.dismiss();
+
+      }, (err => {
+        switch (err.status) {
+          // case 0:
+          //   this.msg = "Check Your Internet.";
+          //   loader.dismiss();
+          //   break;
+          case 408:
+            this.msg = "Connection TimeOut.";
+            loader.dismiss();
+            break;
+          case 400:
+            this.msg = "Bad Request.";
+            loader.dismiss();
+            break;
+          case 404:
+            this.msg = "Wrong Email Or Password.";
+            loader.dismiss();
+            break;
+          case 403:
+            this.msg = "FORBIDDEN.";
+            loader.dismiss();
+            break;
+          default:
+            this.msg = "Somting Went Wrong.";
+            loader.dismiss();
+            break;
         }
-      })
+
+
+
+
+
+
+
+
+      }))
+
     })
-
-
-
-    // loader.onDidDismiss(()=>{
-    //    this.msg = "Connection TimeOut Try Again Later.";
-    // })
-
 
   }
 

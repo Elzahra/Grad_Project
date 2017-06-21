@@ -51,7 +51,7 @@ export class ChildMapPage {
   childObj: any = {};
   selectedParent: any = {};
   socket: any;
-
+  lastLoc:any={};
   messages: Array<string> = [];
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -81,9 +81,11 @@ export class ChildMapPage {
     this.socket.on('connect', () => {
       console.log("from parent app", this.selectedParent.id);
       console.log("from parent app>>Obj", this.selectedParent);
-
       this.socket.emit('joinParent', this.selectedParent.id);
     })
+
+
+
     let loader = this.loadingCtrl.create({
       content: 'Loading..',
 
@@ -91,13 +93,13 @@ export class ChildMapPage {
     loader.present().then(() => {
       this.trackApi.getHistoryByCId(this.childObj.id).subscribe(data => {
         if (data) {
-          let lastLoc = _.first(data);
-          console.log("LastLocation>>>", lastLoc);
-          if (lastLoc != undefined) {
-            this.locationFlag = lastLoc;
-            this.lat = lastLoc.latitude;
-            this.lng = lastLoc.longitude;
-            this.speed = lastLoc.speed ? lastLoc.speed * 3.6 : 0;
+          this.lastLoc = _.first(data);
+          console.log("LastLocation>>>", this.lastLoc);
+          if (this.lastLoc != undefined) {
+            this.locationFlag = this.lastLoc;
+            this.lat = this.lastLoc.latitude;
+            this.lng = this.lastLoc.longitude;
+            this.speed = this.lastLoc.speed ? this.lastLoc.speed * 3.6 : 0;
           }
 
         }
@@ -109,7 +111,10 @@ export class ChildMapPage {
 
 
     this.socket.on('message', location => {
-      if (location) {
+        this.locationFlag = location;
+        this.lat = location.latitude;
+        this.lng = location.longitude;
+        this.speed = location.speed ? location.speed * 3.6 : 0
         console.log("message latitude>>>>", location.latitude)
         this.historyObj.child_Id = this.childObj.id;
         this.historyObj.longitude = location.longitude;
@@ -125,14 +130,6 @@ export class ChildMapPage {
         this.trackApi.addHistory(this.historyObj).subscribe(data => {
           console.log(data);
         });
-
-        this.locationFlag = location;
-        this.lat = location.latitude;
-        this.lng = location.longitude;
-        this.speed = location.speed ? location.speed * 3.6 : 0
-      }
-
-
     })
 
   }

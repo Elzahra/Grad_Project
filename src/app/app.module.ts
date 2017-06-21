@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { IonicStorageModule , Storage } from '@ionic/Storage';
+import { IonicStorageModule } from '@ionic/Storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TrackApi } from '../pages/shared/track-api.service'
 import { EmailValidator } from '../pages/shared/validator'
@@ -29,10 +29,17 @@ import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { ModalAutocompleteItems } from '../pages/modal-autocomplete-items/modal-autocomplete-items';
 import { AgmCoreModule } from '@agm/core';
-
+//import { CloudModule, CloudSettings } from '@ionic/cloud-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+// const cloudSettings: CloudSettings = {
+//   'core': {
+//     'app_id': '0ea245b0'
+//   },
+//   'push':{
+//     'sender_id':'784577836055'
+//   }
+// };
 @NgModule({
   declarations: [
     MyApp,
@@ -62,6 +69,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    //CloudModule.forRoot(cloudSettings),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyD147jg0SjU32sglPT4qfi2VfGcL1EC364'
     })
