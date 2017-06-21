@@ -162,6 +162,7 @@ else{
       this.parentObj.address.city = this.profileForm.value.city;
       this.parentObj.address.street = this.profileForm.value.street;
       this.parentObj.address.country = this.profileForm.value.country;
+      this.parentObj.imageUrl ="";
 }
     loader.present().then(() => {
 {
@@ -173,7 +174,6 @@ else{
           loader.dismiss();
           this.navCtrl.push(ParentProfilePage);
           
-
           let toast = this.toastCtrl.create({
             message: 'Your data is updated successfully',
             duration: 2500,
@@ -182,9 +182,7 @@ else{
           toast.onDidDismiss(() => {
             console.log('Dismissed toast');
           });
-
           toast.present();
-
         }
       },(err=>{
         loader.dismiss();
@@ -192,8 +190,8 @@ else{
         switch (err.status) {
           case 400:
           toast = this.toastCtrl.create({
-            message: 'Invalid Data ',
-            duration: 2500,
+            message: 'Invalid Data',
+            duration: 2000,
             position: 'middle'
           });
           toast.present();

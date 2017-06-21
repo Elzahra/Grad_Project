@@ -35,6 +35,8 @@ export class ParentProfilePage {
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
         console.log("pppppppppppppppp",val);
+        if(val.imageUrl!="")
+        {
         this.fname = val.fname;
         this.lname = val.lname;
         this.email = val.email;
@@ -45,6 +47,19 @@ export class ParentProfilePage {
         this.country = val.address.country;
         this.captureDataUrl=val.imageUrl;
         loader.dismiss();
+      }
+      else{
+         this.fname = val.fname;
+        this.lname = val.lname;
+        this.email = val.email;
+        this.password = val.password;
+        this.telephone = val.telephone;
+        this.street = val.address.street;
+        this.city = val.address.city;
+        this.country = val.address.country;
+        this.captureDataUrl="";
+        loader.dismiss();
+      }
       });
     })
   }
