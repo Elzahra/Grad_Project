@@ -38,7 +38,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.push.register().then(token => {
-        alert(JSON.stringify(token));
+        //alert(JSON.stringify(token));
       });
       this.push.rx.notification().subscribe(msg => {
         this.push.register().then(token => {
