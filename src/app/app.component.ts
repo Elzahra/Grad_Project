@@ -22,7 +22,7 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar,private push: Push, public splashScreen: SplashScreen,private storage: Storage,) {
+  constructor(public platform: Platform, public statusBar: StatusBar, private push: Push, public splashScreen: SplashScreen, private storage: Storage, ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -37,12 +37,11 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-              this.push.register().then(token => {
-          alert(JSON.stringify(token));
-        });
+      this.push.register().then(token => {
+        alert(JSON.stringify(token));
+      });
       this.push.rx.notification().subscribe(msg => {
         this.push.register().then(token => {
-          alert(JSON.stringify(token));
         });
         alert(msg.title);
       });
@@ -69,20 +68,20 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  goToAddChild(){
+  goToAddChild() {
     this.nav.push(AddChildPage)
-    
+
   }
-  goToLocation(){
+  goToLocation() {
     this.nav.push(PageGmapAutocomplete);
   }
- goToParentPage(){
+  goToParentPage() {
     this.nav.push(ParentProfilePage);
   }
-  goHome(){
+  goHome() {
     this.nav.popToRoot();
   }
-  LogOut(){
+  LogOut() {
     this.storage.clear();
     this.nav.setRoot(HomePage);
     this.nav.popToRoot();
