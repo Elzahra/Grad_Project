@@ -133,6 +133,8 @@ export class EditProfilePage {
     let loader = this.loadingCtrl.create({
       content: 'Loading ...',
     });
+        loader.present().then(() => {
+
 if (this.captureDataUrl != "") {
     let storageRef = firebase.storage().ref();
     const filename = Math.floor(Date.now() / 1000);
@@ -164,8 +166,7 @@ else{
       this.parentObj.address.country = this.profileForm.value.country;
       this.parentObj.imageUrl ="";
 }
-    loader.present().then(() => {
-{
+
       this.trackApi.UpdateParent(this.parentObj).subscribe(data => {
         if (data) {
           console.log("inside update parent function", data);
@@ -216,7 +217,7 @@ else{
         }
 
       }))
-      }
+      
 });
   }
 }//class
