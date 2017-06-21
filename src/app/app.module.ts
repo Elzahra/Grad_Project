@@ -32,14 +32,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CloudModule } from '@ionic/cloud-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-// const cloudSettings: CloudSettings = {
-//   'core': {
-//     'app_id': '0ea245b0'
-//   },
-//   'push':{
-//     'sender_id':'784577836055'
-//   }
-// };
+
 @NgModule({
   declarations: [
     MyApp,
@@ -71,10 +64,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     IonicStorageModule.forRoot(),
     CloudModule.forRoot({
   'core': {
-    'app_id': 'APP_ID',
+    'app_id': '0ea245b0',
   },
   'push': {
-    'sender_id': 'SENDER_ID',
+    'sender_id': '784577836055',
     'pluginConfig': {
       'ios': {
         'badge': true,
