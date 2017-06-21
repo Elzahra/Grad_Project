@@ -48,7 +48,7 @@ export class ChildDetailsPage {
 
 
     let alert = this.alertCtrl.create({
-    title: 'Confirm purchase',
+    title: 'Deleting?!',
     message: 'Are you sure you want to delete this child ?',
     buttons: [
       {
