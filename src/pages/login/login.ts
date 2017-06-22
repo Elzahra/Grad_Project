@@ -3,8 +3,8 @@ import { NavController, NavParams, MenuController, LoadingController, ToastContr
 import { MyChildPage } from '../my-child/my-child';
 //import { ChildProfilePage } from '../child-profile/child-profile';
 import { Storage } from '@ionic/Storage';
-//import { Storage } from '@ionic/storage';
-
+import { Push } from '@ionic/cloud-angular';
+import * as io from 'socket.io-client'
 import { TrackApi, IParent, ILogin } from '../shared/track-api.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -19,7 +19,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
+  socket: any;
   login: ILogin = {
     email: "",
     password: ""
@@ -38,7 +38,8 @@ export class LoginPage {
     private formBuilder: FormBuilder,
     private storage: Storage,
     private menuCtrl: MenuController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private push: Push
   ) {
     this.menuCtrl.swipeEnable(false);
     this.loginForm = this.formBuilder.group({
@@ -55,7 +56,7 @@ export class LoginPage {
   }
   //
   GoToMychild() {
-
+    let parentUser;
 
     this.login.email = this.loginForm.value.email
     this.login.password = this.loginForm.value.password
@@ -74,6 +75,36 @@ export class LoginPage {
           //this.store.set('userId', this.selectedParent.id);
           this.storage.clear();
           this.storage.set('parent', this.selectedParent);
+
+          this.push.register().then(token => {
+            parentUser = {
+              id: this.selectedParent.id,
+              token: token
+            }
+            //alert(JSON.stringify(token));
+            this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+            this.socket.on('connect', () => {
+              console.log("from parent app", this.selectedParent.id);
+              console.log("from parent app>>Obj", this.selectedParent);
+              this.socket.emit('NotifyParent', parentUser);
+            })
+          });
+          this.push.rx.notification().subscribe(msg => {
+            this.push.register().then(token => {
+              parentUser = {
+                id: this.selectedParent.id,
+                token: token
+              }
+              this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+              this.socket.on('connect', () => {
+                console.log("from parent app", this.selectedParent.id);
+                console.log("from parent app>>Obj", this.selectedParent);
+                this.socket.emit('NotifyParent', parentUser);
+              })
+            });
+            alert(msg.title);
+          });
+
           loader.dismiss();
           this.navCtrl.setRoot(MyChildPage);
           this.navCtrl.popToRoot();

@@ -9,7 +9,7 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
 })
 
 export class ParentProfilePage {
-
+ 
 
   fname: string = '';
   lname: string = '';
@@ -57,7 +57,7 @@ export class ParentProfilePage {
         this.street = val.address.street;
         this.city = val.address.city;
         this.country = val.address.country;
-        this.captureDataUrl="";
+       // this.captureDataUrl="";
         loader.dismiss();
       }
       });

@@ -68,6 +68,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   },
   'push': {
     'sender_id': '784577836055',
+  
     'pluginConfig': {
       'ios': {
         'badge': true,
@@ -75,7 +76,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
       },
       'android': {
         'iconColor': '#343434',
-        'sound':true
+        'sound':true,
+         'vibrate':true
+
       }
     }
   }
