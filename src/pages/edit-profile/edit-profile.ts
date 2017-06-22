@@ -15,7 +15,7 @@ import firebase from 'firebase';
 
 export class EditProfilePage {
 
-  private captureDataUrl: string = "";
+  
   parentObj: IParent = {
     id: 0,
     fname: "",
@@ -45,7 +45,8 @@ export class EditProfilePage {
   city: string = '';
   country: string = '';
   selectedParent: any = [];
-  img: string = '';
+ // img: string = '';
+  private captureDataUrl: string = "";
   //////////////////////constructor
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -84,6 +85,7 @@ export class EditProfilePage {
         this.street = val.address.street;
         this.city = val.address.city;
         this.country = val.address.country;
+        this.captureDataUrl=val.imageUrl;
         loader.dismiss();
       });
     })
