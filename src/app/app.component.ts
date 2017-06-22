@@ -122,9 +122,13 @@ export class MyApp {
     this.nav.popToRoot();
   }
   LogOut() {
-    this.storage.clear();
-    this.nav.setRoot(HomePage);
-    this.nav.popToRoot();
+
+    this.push.unregister().then(() => {
+      this.storage.clear();
+      this.nav.setRoot(HomePage);
+      this.nav.popToRoot();
+    })
+
   }
 
 }
