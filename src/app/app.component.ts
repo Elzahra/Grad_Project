@@ -11,6 +11,7 @@ import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { Storage } from '@ionic/Storage';
 import { Push } from '@ionic/cloud-angular';
+import * as io from 'socket.io-client'
 
 @Component({
   templateUrl: 'app.html'
@@ -18,11 +19,13 @@ import { Push } from '@ionic/cloud-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
-
+  rootPage: any;
+  selectedParent: any;
+  children: any;
+  socket: any;
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, private push: Push, public splashScreen: SplashScreen, private storage: Storage, ) {
+  constructor(public platform: Platform, public statusBar: StatusBar, private push: Push, public splashScreen: SplashScreen, private storage: Storage) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -35,18 +38,55 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      let parentUser;
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.push.register().then(token => {
-        //alert(JSON.stringify(token));
+      this.storage.get('parent').then((val) => {
+
+        console.log("parent val", val);
+        if (val != null) {
+          this.selectedParent = val;
+          this.children = this.selectedParent.childs;
+          this.rootPage = MyChildPage;
+          this.push.register().then(token => {
+            parentUser = {
+              id: this.selectedParent.id,
+              token: token.token
+            }
+            //alert(JSON.stringify(token));
+            this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+            this.socket.on('connect', () => {
+              console.log("from parent app", this.selectedParent.id);
+              console.log("from parent app>>Obj", this.selectedParent);
+              this.socket.emit('NotifyParent', parentUser);
+            })
+          });
+          this.push.rx.notification().subscribe(msg => {
+            this.push.register().then(token => {
+              parentUser = {
+                id: this.selectedParent.id,
+                token: token.token
+              }
+              this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+              this.socket.on('connect', () => {
+                console.log("from parent app", this.selectedParent.id);
+                console.log("from parent app>>Obj", this.selectedParent);
+                this.socket.emit('NotifyParent', parentUser);
+              })
+            });
+            alert(msg.title);
+          });
+          this.statusBar.styleDefault();
+          this.splashScreen.hide();
+        }
+        else {
+          this.rootPage = HomePage;
+          this.statusBar.styleDefault();
+          this.splashScreen.hide();
+        }
+
       });
-      this.push.rx.notification().subscribe(msg => {
-        this.push.register().then(token => {
-        });
-        alert(msg.title);
-      });
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+
 
       let config = {
         apiKey: "AIzaSyDohpBfcMQaDLWsfeYnULxdfSxVzfLy-SI",

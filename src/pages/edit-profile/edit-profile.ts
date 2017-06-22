@@ -141,7 +141,6 @@ export class EditProfilePage {
           const filename = Math.floor(Date.now() / 1000);
           const imageRef = storageRef.child(`images/${filename}.jpg`);
           imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
-
             this.parentObj.fname = this.profileForm.value.fname;
             this.parentObj.lname = this.profileForm.value.lname;
             this.parentObj.email = this.profileForm.value.email;
@@ -225,12 +224,6 @@ export class EditProfilePage {
               break;
           }
 
-<<<<<<< HEAD
         }))
-=======
-      }))
-      
-});
->>>>>>> 6957abdafab135e3807047f080b2c9f73c252d3d
   }
 }//class
