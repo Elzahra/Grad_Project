@@ -15,7 +15,7 @@ import firebase from 'firebase';
 
 export class EditProfilePage {
 
-  
+
   parentObj: IParent = {
     id: 0,
     fname: "",
@@ -74,7 +74,7 @@ export class EditProfilePage {
     });
     loader.present().then(() => {
       this.storage.get('parent').then((val) => {
-        console.log("inside ionViewWillEnter", val);
+        console.log("inside ionViewWillEnter edit parent profile", val);
         this.parentObj.id = val.id;
         this.fname = val.fname;
         this.lname = val.lname;
@@ -84,7 +84,7 @@ export class EditProfilePage {
         this.street = val.address.street;
         this.city = val.address.city;
         this.country = val.address.country;
-        this.captureDataUrl=val.imageUrl;
+        this.captureDataUrl = val.imageUrl;
         loader.dismiss();
       });
     })
@@ -135,28 +135,18 @@ export class EditProfilePage {
     let loader = this.loadingCtrl.create({
       content: 'Loading ...',
     });
-   loader.present().then(() => {
-   if (this.captureDataUrl != "") {
-          let storageRef = firebase.storage().ref();
-          const filename = Math.floor(Date.now() / 1000);
-          const imageRef = storageRef.child(`images/${filename}.jpg`);
-          imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
-            this.parentObj.fname = this.profileForm.value.fname;
-            this.parentObj.lname = this.profileForm.value.lname;
-            this.parentObj.email = this.profileForm.value.email;
-            this.parentObj.password = this.profileForm.value.password;
-            this.parentObj.telephone = this.profileForm.value.telephone;
-            this.parentObj.userRole = Role.Parent;
-            this.parentObj.viewFlag = true;
-            this.parentObj.imageUrl = snapshot.downloadURL;
-            this.parentObj.address.city = this.profileForm.value.city;
-            this.parentObj.address.street = this.profileForm.value.street;
-            this.parentObj.address.country = this.profileForm.value.country;
-
-            this.ApiMethod(loader)
-          });
-        }
-        else {
+    loader.present().then(() => {
+      console.log("inside loader present");
+      if (this.captureDataUrl != "") {
+        console.log("inside captureDataUrl is not null");
+        let storageRef = firebase.storage().ref();
+        const filename = Math.floor(Date.now() / 1000);
+        const imageRef = storageRef.child(`images/${filename}.jpg`);
+        console.log("storageRef  ",storageRef);
+        console.log("this.captureDataUrl ", this.captureDataUrl);
+        imageRef.putString(this.captureDataUrl).then((snapshot) => {
+          //, firebase.storage.StringFormat.DATA_URL
+          console.log("snapshot ", snapshot.downloadURL);
           this.parentObj.fname = this.profileForm.value.fname;
           this.parentObj.lname = this.profileForm.value.lname;
           this.parentObj.email = this.profileForm.value.email;
@@ -164,66 +154,87 @@ export class EditProfilePage {
           this.parentObj.telephone = this.profileForm.value.telephone;
           this.parentObj.userRole = Role.Parent;
           this.parentObj.viewFlag = true;
+          if (storageRef.fullPath != "") {
+            this.parentObj.imageUrl = snapshot.downloadURL;
+          }
+          else {
+            this.parentObj.imageUrl = this.captureDataUrl;
+          }
           this.parentObj.address.city = this.profileForm.value.city;
           this.parentObj.address.street = this.profileForm.value.street;
           this.parentObj.address.country = this.profileForm.value.country;
-          this.parentObj.imageUrl = this.captureDataUrl;
+          console.log("inside this.parentObj", this.parentObj);
+          this.ApiMethod(loader)
+        });
+      }
+      else {
+        this.parentObj.fname = this.profileForm.value.fname;
+        this.parentObj.lname = this.profileForm.value.lname;
+        this.parentObj.email = this.profileForm.value.email;
+        this.parentObj.password = this.profileForm.value.password;
+        this.parentObj.telephone = this.profileForm.value.telephone;
+        this.parentObj.userRole = Role.Parent;
+        this.parentObj.viewFlag = true;
+        this.parentObj.address.city = this.profileForm.value.city;
+        this.parentObj.address.street = this.profileForm.value.street;
+        this.parentObj.address.country = this.profileForm.value.country;
+        this.parentObj.imageUrl = this.captureDataUrl;
 
-          this.ApiMethod(loader)        
-        }       
+        this.ApiMethod(loader)
+      }
     });//loader present
   }
-//////////////////////////////////////////////
-  ApiMethod(loader){
-       this.trackApi.UpdateParent(this.parentObj).subscribe(data => {
-          if (data) {
-            console.log("inside update parent function", data);
-            this.storage.clear();
-            this.storage.set('parent', data);
-            loader.dismiss();
-            this.navCtrl.push(ParentProfilePage);
+  //////////////////////////////////////////////
+  ApiMethod(loader) {
+    this.trackApi.UpdateParent(this.parentObj).subscribe(data => {
+      if (data) {
+        console.log("inside update parent function", data);
+        this.storage.clear();
+        this.storage.set('parent', data);
+        loader.dismiss();
+        this.navCtrl.push(ParentProfilePage);
 
-            let toast = this.toastCtrl.create({
-              message: 'Your data is updated successfully',
-              duration: 2500,
-              position: 'middle'
-            });
-            toast.onDidDismiss(() => {
-              console.log('Dismissed toast');
-            });
-            toast.present();
-          }
-        }, (err => {
-          loader.dismiss();
-          let toast;
-          switch (err.status) {
-            case 400:
-              toast = this.toastCtrl.create({
-                message: 'Invalid Data',
-                duration: 2000,
-                position: 'middle'
-              });
-              toast.present();
-              break;
-            case 404:
-              toast = this.toastCtrl.create({
-                message: 'Not Found',
-                duration: 2500,
-                position: 'middle'
-              });
-              toast.present();
-              break;
+        let toast = this.toastCtrl.create({
+          message: 'Your data is updated successfully',
+          duration: 2500,
+          position: 'middle'
+        });
+        toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+        });
+        toast.present();
+      }
+    }, (err => {
+      loader.dismiss();
+      let toast;
+      switch (err.status) {
+        case 400:
+          toast = this.toastCtrl.create({
+            message: 'Invalid Data',
+            duration: 2000,
+            position: 'middle'
+          });
+          toast.present();
+          break;
+        case 404:
+          toast = this.toastCtrl.create({
+            message: 'Not Found',
+            duration: 2500,
+            position: 'middle'
+          });
+          toast.present();
+          break;
 
-            default:
-              toast = this.toastCtrl.create({
-                message: 'Connection TimeOut',
-                duration: 2500,
-                position: 'middle'
-              });
-              toast.present();
-              break;
-          }
+        default:
+          toast = this.toastCtrl.create({
+            message: 'Connection TimeOut',
+            duration: 2500,
+            position: 'middle'
+          });
+          toast.present();
+          break;
+      }
 
-        }));
+    }));
   }
 }//class
