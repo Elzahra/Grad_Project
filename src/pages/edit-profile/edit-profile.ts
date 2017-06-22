@@ -45,7 +45,6 @@ export class EditProfilePage {
   city: string = '';
   country: string = '';
   selectedParent: any = [];
- // img: string = '';
   private captureDataUrl: string = "";
   //////////////////////constructor
   constructor(public navCtrl: NavController,
@@ -130,7 +129,7 @@ export class EditProfilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
   }
-  ////////////////////
+  ///////////////////////////
   DoneEditProfile() {
     console.log("inside DoneEditProfile method");
     let loader = this.loadingCtrl.create({
@@ -154,7 +153,7 @@ export class EditProfilePage {
             this.parentObj.address.street = this.profileForm.value.street;
             this.parentObj.address.country = this.profileForm.value.country;
 
-            this.apimethod(loader)
+            this.ApiMethod(loader)
           });
         }
         else {
@@ -170,12 +169,12 @@ export class EditProfilePage {
           this.parentObj.address.country = this.profileForm.value.country;
           this.parentObj.imageUrl = this.captureDataUrl;
 
-          this.apimethod(loader)        
+          this.ApiMethod(loader)        
         }       
     });//loader present
   }
-
-  apimethod(loader){
+//////////////////////////////////////////////
+  ApiMethod(loader){
        this.trackApi.UpdateParent(this.parentObj).subscribe(data => {
           if (data) {
             console.log("inside update parent function", data);
@@ -225,6 +224,6 @@ export class EditProfilePage {
               break;
           }
 
-        }))
+        }));
   }
 }//class
