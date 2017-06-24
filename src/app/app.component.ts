@@ -11,7 +11,7 @@ import { ParentProfilePage } from '../pages/parent-profile/parent-profile';
 import { PageGmapAutocomplete } from '../pages/page-gmap-autocomplete/page-gmap-autocomplete';
 import { Storage } from '@ionic/Storage';
 import { Push } from '@ionic/cloud-angular';
-import * as io from 'socket.io-client'
+import * as io from 'socket.io-client';
 
 @Component({
   templateUrl: 'app.html'
@@ -62,6 +62,8 @@ export class MyApp {
             })
           });
           this.push.rx.notification().subscribe(msg => {
+
+
             this.push.register().then(token => {
               parentUser = {
                 id: this.selectedParent.id,
@@ -74,7 +76,10 @@ export class MyApp {
                 this.socket.emit('NotifyParent', parentUser);
               })
             });
-            alert(msg.title);
+            
+            // alert(msg.);
+            
+            // this.nav.setRoot(AddLocationPage, msg);
           });
           this.statusBar.styleDefault();
           this.splashScreen.hide();
@@ -122,12 +127,13 @@ export class MyApp {
     this.nav.popToRoot();
   }
   LogOut() {
-
     this.push.unregister().then(() => {
-      this.storage.clear();
-      this.nav.setRoot(HomePage);
-      this.nav.popToRoot();
+
     })
+    this.storage.clear();
+    this.nav.setRoot(HomePage);
+    this.nav.popToRoot();
+
 
   }
 

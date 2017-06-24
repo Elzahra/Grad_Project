@@ -12,8 +12,12 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'add-location.html',
 })
 export class AddLocationPage {
-
+  location;
+  lat:number;
+  lng:number;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.lat=navParams.data.data.message.lat;
+    this.lng=navParams.data.data.message.lng;
   }
 
   ionViewDidLoad() {

@@ -102,7 +102,7 @@ export class LoginPage {
                 this.socket.emit('NotifyParent', parentUser);
               })
             });
-            alert(msg.title);
+            //alert(msg.title);
           });
 
           loader.dismiss();
