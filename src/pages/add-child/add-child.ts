@@ -92,17 +92,14 @@ export class AddChildPage {
     };
 
     this.cam.getPicture(cameraOptions).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
       this.captureDataUrl = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       // Handle error
     });
   }
   //////////////////////////////////////////////////////////////////
-
   GoToAddChild() {
-     let loader = this.loadingCtrl.create({
+    let loader = this.loadingCtrl.create({
       content: 'Adding Child...',
     });
     loader.present().then(() => {
@@ -125,51 +122,7 @@ export class AddChildPage {
           this.ChildObj.parent_Id = this.parentObj.id;
           this.ChildObj.imageUrl = snapshot.downloadURL;
           console.log(this.ChildObj);
-          this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
-            if (data) {
-              console.log("validateEmail>>>>", data)
-              this.isUnique = "This Email is Already Registered";
-              this.msg = "";
-              loader.dismiss();
-            }
-            else {
-              this.isUnique = ""
-              this.trackApi.addChild(this.ChildObj).subscribe(data => {
-                if (data) {
-                  loader.dismiss();
-                  this.parentObj.childs.push(this.ChildObj);
-                  this.storage.set('parent', this.parentObj);
-                  let toast = this.toastCtrl.create({
-                    message: 'Your child was added successfully',
-                    duration: 1500,
-                    position: 'middle'
-                  });
-                  toast.onDidDismiss(() => {
-                    console.log('Dismissed toast', this.parentObj.id);
-                    let prnt_id = this.parentObj.id;
-                    this.trackApi.getParentsById(prnt_id).subscribe(Pdata => {
-                      console.log("parent val <<<<<<<<>>>>>", Pdata);
-                      this.storage.clear();
-                      this.storage.set('parent', Pdata);
-                      this.navCtrl.popToRoot();
-                      //this.navCtrl.push(MyChildPage);
-                    });//getParentsById
-                  });
-
-                  toast.present();
-
-                  this.SignupForm.reset();
-                }
-                else {
-                  this.msg = 'Somting Went Wrong.. Try Again';
-                  loader.dismiss();
-                }
-
-              })
-            }
-          })
-
-
+          this.Api_Method(loader);
         });
 
       }
@@ -185,53 +138,52 @@ export class AddChildPage {
         this.ChildObj.address.street = this.SignupForm.value.street;
         this.ChildObj.address.country = this.SignupForm.value.country;
         this.ChildObj.imageUrl = null;
-        //"https://upload.wikimedia.org/wikipedia/en/9/9d/Kids_film.jpg";
-        console.log(this.ChildObj);
-        this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
+        this.Api_Method(loader);
+      }
+    })
+  }
+  ///////////////////////////////////////////////////
+  Api_Method(loader) {
+
+    this.trackApi.validatechildEmail(this.SignupForm.value.email).subscribe(data => {
+      if (data) {
+        console.log("validateEmail>>>>", data)
+        this.isUnique = "This Email is Already Registered";
+        this.msg = "";
+        loader.dismiss();
+      }
+      else {
+        this.isUnique = ""
+        this.trackApi.addChild(this.ChildObj).subscribe(data => {
           if (data) {
-            console.log("validateEmail>>>>", data)
-            this.isUnique = "This Email is Already Registered";
-            this.msg = "";
             loader.dismiss();
+            this.parentObj.childs.push(this.ChildObj);
+            this.storage.set('parent', this.parentObj);
+            let toast = this.toastCtrl.create({
+              message: 'Your child was added successfully',
+              duration: 1500,
+              position: 'middle'
+            });
+            toast.onDidDismiss(() => {
+              console.log('Dismissed toast', this.parentObj.id);
+              let prnt_id = this.parentObj.id;
+              this.trackApi.getParentsById(prnt_id).subscribe(Pdata => {
+                console.log("parent val <<<<<<<<>>>>>", Pdata);
+                this.storage.clear();
+                this.storage.set('parent', Pdata);
+                this.navCtrl.popToRoot();
+              });//getParentsById
+            });
+            toast.present();
+            this.SignupForm.reset();
           }
           else {
-            this.isUnique = ""
-            this.trackApi.addChild(this.ChildObj).subscribe(data => {
-              if (data) {
-                loader.dismiss();
-                this.parentObj.childs.push(this.ChildObj);
-                this.storage.set('parent', this.parentObj);
-                let toast = this.toastCtrl.create({
-                  message: 'Your child was added successfully',
-                  duration: 1500,
-                  position: 'middle'
-                });
-                toast.onDidDismiss(() => {
-                  console.log('Dismissed toast', this.parentObj.id);
-                  let prnt_id = this.parentObj.id;
-                  this.trackApi.getParentsById(prnt_id).subscribe(Pdata => {
-                    console.log("parent val <<<<<<<<>>>>>", Pdata);
-                    this.storage.clear();
-                    this.storage.set('parent', Pdata);
-                    this.navCtrl.popToRoot();
-                    //this.navCtrl.push(MyChildPage);
-                  });//getParentsById
-                });
-
-                toast.present();
-
-                this.SignupForm.reset();
-              }
-              else {
-                this.msg = 'Somting Went Wrong.. Try Again';
-                loader.dismiss();
-              }
-
-            })
+            this.msg = 'Somting Went Wrong.. Try Again';
+            loader.dismiss();
           }
+
         })
       }
     })
   }
-  ////////////////////////////////////////////////////////////////
 }
