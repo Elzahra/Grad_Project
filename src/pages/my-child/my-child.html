@@ -41,7 +41,7 @@
 
 
     <div *ngFor="let child of children">
-    <ion-item (click)="ItemChild($event, child)" *ngIf="child.viewFlag==true">
+    <ion-item (click)="ItemChild($event, child)">
       <ion-avatar item-start *ngIf="child.imageUrl!='' && child.imageUrl!=null ">
         <img src="child.imageUrl">
       </ion-avatar>

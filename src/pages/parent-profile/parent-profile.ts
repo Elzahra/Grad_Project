@@ -49,7 +49,7 @@ export class ParentProfilePage {
         loader.dismiss();
       }
       else{
-         this.fname = val.fname;
+        this.fname = val.fname;
         this.lname = val.lname;
         this.email = val.email;
         this.password = val.password;
