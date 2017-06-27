@@ -25,12 +25,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="list-avatar-page">
  <ion-list>
-    <div *ngFor="let child of children"  >
-      <button ion-item  *ngIf="child.viewFlag==true" (click)="ItemChild($event, child)">
+   
+    <!--<div  *ngFor="let child of children"  >
+      <ion-avatar  item-start>
+        <img src="https://image.ibb.co/mm1V3Q/default_avatar.png">
+      </ion-avatar>
+
+      <button ion-item item-end  *ngIf="child.viewFlag==true" (click)="ItemChild($event, child)">
       {{child.fname}}
       </button>
+    </div>-->
+
+
+
+    <div *ngFor="let child of children">
+    <ion-item (click)="ItemChild($event, child)" *ngIf="child.viewFlag==true">
+      <ion-avatar item-start *ngIf="child.imageUrl!='' && child.imageUrl!=null ">
+        <img src="child.imageUrl">
+      </ion-avatar>
+
+      
+      <ion-avatar item-start *ngIf="child.imageUrl=='' || child.imageUrl==null ">
+        <img src="https://image.ibb.co/mm1V3Q/default_avatar.png">
+      </ion-avatar>
+      <h2>{{child.fname}}</h2>
+
+    </ion-item>
     </div>
   </ion-list>
 </ion-content>

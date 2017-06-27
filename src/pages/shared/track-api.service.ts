@@ -90,7 +90,7 @@ export interface IChild {
 
 @Injectable()
 export class TrackApi {
-    private baseUrl = 'http://trackapi.gear.host/api';
+    private baseUrl = 'http://trackapiservice.azurewebsites.net/api';
     //head = new Headers({ 'Content-Type': 'application/json' });
     //http://localhost:28529/api/parent/GetByEmail
     //private baseUrl = 'http://localhost:28529/api';

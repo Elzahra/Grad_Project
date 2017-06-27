@@ -82,7 +82,7 @@ export class LoginPage {
               token: token
             }
             //alert(JSON.stringify(token));
-            this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+            this.socket = io.connect("https://realtimetrackservice.herokuapp.com/");
             this.socket.on('connect', () => {
               console.log("from parent app", this.selectedParent.id);
               console.log("from parent app>>Obj", this.selectedParent);
@@ -95,7 +95,7 @@ export class LoginPage {
                 id: this.selectedParent.id,
                 token: token
               }
-              this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+              this.socket = io.connect("https://realtimetrackservice.herokuapp.com/");
               this.socket.on('connect', () => {
                 console.log("from parent app", this.selectedParent.id);
                 console.log("from parent app>>Obj", this.selectedParent);
@@ -112,10 +112,6 @@ export class LoginPage {
 
       }, (err => {
         switch (err.status) {
-          // case 0:
-          //   this.msg = "Check Your Internet.";
-          //   loader.dismiss();
-          //   break;
           case 408:
             this.msg = "Connection TimeOut.";
             loader.dismiss();
@@ -133,7 +129,7 @@ export class LoginPage {
             loader.dismiss();
             break;
           default:
-            this.msg = "Somting Went Wrong.";
+            this.msg = "Somting Went Wrong. Please Check Your Connection.";
             loader.dismiss();
             break;
         }

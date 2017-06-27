@@ -151,7 +151,7 @@ export class SignupPage {
         this.parentObj.password = this.SignupForm.value.password;
         this.parentObj.telephone = this.SignupForm.value.telephone;
         this.parentObj.address.city = this.SignupForm.value.address;
-        this.parentObj.imageUrl = null;
+        this.parentObj.imageUrl = 'https://image.ibb.co/mm1V3Q/default_avatar.png';
           
         this.trackApi.validateEmail(this.SignupForm.value.email).subscribe(data => {
           if (data) {

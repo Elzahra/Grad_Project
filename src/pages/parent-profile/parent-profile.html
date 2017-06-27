@@ -9,29 +9,37 @@
   <ion-navbar>
     <ion-title>Profile</ion-title>
   </ion-navbar>
-<ion-toolbar color="light">
-        <ion-buttons end>               
-                <button ion-button  color="secondary" (click)="EditProfile()"> <ion-icon ios="ios-brush" md="md-brush"></ion-icon> </button>              
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons end>
+      <button ion-button color="secondary" (click)="EditProfile()"> <ion-icon ios="ios-brush" md="md-brush"></ion-icon> </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
   <!--<form [formGroup]="profileForm" (ngSubmit)="editProfile()">-->
   <ion-grid id="grid">
- <ion-row>
-    <img class="image" [src]="captureDataUrl" *ngIf="captureDataUrl" round/>
-  </ion-row>
+    <ion-row>
+      <ion-avatar *ngIf="captureDataUrl">
+        <img [src]="captureDataUrl" round/>
+
+      </ion-avatar>
+
+      <ion-avatar *ngIf="!captureDataUrl">
+        <img src="https://image.ibb.co/mm1V3Q/default_avatar.png" round/>
+
+      </ion-avatar>
+    </ion-row>
 
 
     <ion-row>
       <ion-col>
         <label class="lbl_fixed">First Name</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="fname"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{fname}}</label>
       </ion-col>
@@ -41,9 +49,9 @@
       <ion-col>
         <label class="lbl_fixed">Last Name</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="lname"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{lname}}</label>
       </ion-col>
@@ -53,9 +61,9 @@
       <ion-col>
         <label class="lbl_fixed">Email</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="email"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{email}}</label>
       </ion-col>
@@ -75,11 +83,11 @@
 
     <ion-row>
       <ion-col>
-        <label class="lbl_fixed" >Telephone</label>
+        <label class="lbl_fixed">Telephone</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="telephone"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{telephone}}</label>
       </ion-col>
@@ -89,9 +97,9 @@
       <ion-col>
         <label class="lbl_fixed">Street</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="street"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{street}}</label>
       </ion-col>
@@ -101,9 +109,9 @@
       <ion-col>
         <label class="lbl_fixed">City</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="city"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{city}}</label>
       </ion-col>
@@ -113,15 +121,15 @@
       <ion-col>
         <label class="lbl_fixed">Country</label>
       </ion-col>
-      <ion-col>
+      <!--<ion-col>
         <label class="lbl" hidden>[(ngModel)]="country"</label>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <label>{{country}}</label>
       </ion-col>
     </ion-row>
 
-   <!-- <ion-row>
+    <!-- <ion-row>
        <ion-col>
         <label class="lbl_fixed">Address</label>
       </ion-col>

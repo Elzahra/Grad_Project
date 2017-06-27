@@ -54,13 +54,14 @@ export class MyApp {
               token: token.token
             }
             //alert(JSON.stringify(token));
-            this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+            this.socket = io.connect("https://realtimetrackservice.herokuapp.com/");
             this.socket.on('connect', () => {
               console.log("from parent app", this.selectedParent.id);
               console.log("from parent app>>Obj", this.selectedParent);
               this.socket.emit('NotifyParent', parentUser);
             })
           });
+          
           this.push.rx.notification().subscribe(msg => {
 
 
@@ -69,7 +70,7 @@ export class MyApp {
                 id: this.selectedParent.id,
                 token: token.token
               }
-              this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+              this.socket = io.connect("https://realtimetrackservice.herokuapp.com/");
               this.socket.on('connect', () => {
                 console.log("from parent app", this.selectedParent.id);
                 console.log("from parent app>>Obj", this.selectedParent);

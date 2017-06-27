@@ -137,7 +137,7 @@ export class AddChildPage {
         this.ChildObj.address.city = this.SignupForm.value.city;
         this.ChildObj.address.street = this.SignupForm.value.street;
         this.ChildObj.address.country = this.SignupForm.value.country;
-        this.ChildObj.imageUrl = null;
+        this.ChildObj.imageUrl = 'https://image.ibb.co/mm1V3Q/default_avatar.png';
         this.Api_Method(loader);
       }
     })

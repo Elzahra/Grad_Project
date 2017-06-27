@@ -72,12 +72,35 @@ export class ChildMapPage {
     this.storage.get('parent').then((val) => {
       // console.log('Your name is', val);
       this.selectedParent = val;
-      this.socket = io.connect("http://realtimetrack.eu-2.evennode.com/");
+      this.socket = io.connect("https://realtimetrackservice.herokuapp.com/");
       this.socket.on('connect', () => {
         console.log("from parent app", this.selectedParent.id);
         console.log("from parent app>>Obj", this.selectedParent);
         this.socket.emit('joinParent', this.selectedParent.id);
       })
+
+      //
+      this.socket.on('message', location => {
+        this.locationFlag = location;
+        this.lat = location.latitude;
+        this.lng = location.longitude;
+        this.speed = location.speed ? location.speed * 3.6 : 0
+        console.log("message latitude>>>>", location.latitude)
+        this.historyObj.child_Id = this.childObj.id;
+        this.historyObj.longitude = location.longitude;
+        this.historyObj.latitude = location.latitude;
+        this.historyObj.speed = location.speed;
+        this.historyObj.time = location.time;
+        this.historyObj.serviceProvider = location.serviceProvider;
+        this.historyObj.timestamp = location.timestamp;
+        this.historyObj.viewFlag = true;
+
+        this.trackApi.addHistory(this.historyObj).subscribe(data => {
+          console.log(data);
+        });
+      })
+
+
 
 
     });
@@ -111,27 +134,7 @@ export class ChildMapPage {
 
 
 
-    this.socket.on('message', location => {
-      this.locationFlag = location;
-      this.lat = location.latitude;
-      this.lng = location.longitude;
-      this.speed = location.speed ? location.speed * 3.6 : 0
-      console.log("message latitude>>>>", location.latitude)
-      this.historyObj.child_Id = this.childObj.id;
-      this.historyObj.longitude = location.longitude;
-      this.historyObj.latitude = location.latitude;
-      this.historyObj.speed = location.speed;
-      this.historyObj.time = location.time;
-      this.historyObj.serviceProvider = location.serviceProvider;
-      this.historyObj.timestamp = location.timestamp;
-      this.historyObj.viewFlag = true;
-      //this.historyObj.coords.latitude=location.coords.latitude;
-      //this.historyObj.coords.longitude=location.coords.longitude;
-      //this.historyObj.coords.speed=location.coords.speed;
-      this.trackApi.addHistory(this.historyObj).subscribe(data => {
-        console.log(data);
-      });
-    })
+
 
   }
   send($event, data) {

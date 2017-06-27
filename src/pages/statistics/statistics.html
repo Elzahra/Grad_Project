@@ -9,21 +9,23 @@
 
 <ion-content padding>
   <agm-map
-      *ngFor="let history of historyList"
-      [latitude]="history.latitude"
-      [longitude]="history.longitude"
-      [zoom]="15"
+      
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="8"
       [disableDefaultUI]="true"
       [zoomControl]="true"
       >
     
       <agm-marker 
-          [latitude]="history.latitude"
-          [longitude]="history.longitude"
+          *ngFor="let m of markers"
+          [latitude]="m.lat"
+          [longitude]="m.lng"
+          [label]="m.label"
           >
           
         <agm-info-window>
-          <strong>Speed {{history.speed}} Km/h</strong>
+          <strong>Speed {{m.speed}} Km/h</strong>
         </agm-info-window>
         
       </agm-marker>
