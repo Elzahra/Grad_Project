@@ -4,7 +4,7 @@ import { TrackApi, IParent, Role } from '../shared/track-api.service'
 import { Storage } from '@ionic/Storage';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ParentProfilePage } from '../parent-profile/parent-profile';
-import { LoginPage } from '../login/login';
+
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 

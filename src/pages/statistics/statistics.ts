@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/Storage';
-import { TrackApi, IHistory } from '../shared/track-api.service';
+import { TrackApi } from '../shared/track-api.service';
 
 declare var google: any;
 

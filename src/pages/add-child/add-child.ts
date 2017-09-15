@@ -4,8 +4,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase';
 import { Storage } from '@ionic/Storage';
-import { TrackApi, IChild, Role, IParent } from '../shared/track-api.service'
-import { MyChildPage } from '../my-child/my-child';
+import { TrackApi, IChild, Role } from '../shared/track-api.service'
+
 
 @Component({
   selector: 'page-add-child',

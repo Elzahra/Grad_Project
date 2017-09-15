@@ -3,9 +3,9 @@ import { NavController, NavParams,AlertController,ToastController  } from 'ionic
 import { SetSchedulePage } from '../set-schedule/set-schedule';
 import { StatisticsPage } from '../statistics/statistics';
 import { ChildMapPage } from '../child-map/child-map';
-import { TrackApi, IParent, Role } from '../shared/track-api.service'
+import { TrackApi } from '../shared/track-api.service'
 import { Storage } from '@ionic/Storage';
-import {MyChildPage} from '../my-child/my-child';
+
 //
 @Component({
   selector: 'page-child-details',

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { TrackApi, IParent } from '../shared/track-api.service'
+
 import { Storage } from '@ionic/Storage';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 @Component({

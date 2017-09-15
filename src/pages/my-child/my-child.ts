@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/Storage';
 import { ChildDetailsPage } from '../child-details/child-details';
-import { TrackApi, IParent, Role } from '../shared/track-api.service'
+import { TrackApi} from '../shared/track-api.service'
 //import { Push } from '@ionic/cloud-angular'
 @Component({
   selector: 'page-my-child',

@@ -84,20 +84,20 @@ export class ChildMapPage {
         this.locationFlag = location;
         this.lat = location.latitude;
         this.lng = location.longitude;
-        this.speed = location.speed ? location.speed * 3.6 : 0
+        this.speed = location.speed * 3.6
         console.log("message latitude>>>>", location.latitude)
-        this.historyObj.child_Id = this.childObj.id;
-        this.historyObj.longitude = location.longitude;
-        this.historyObj.latitude = location.latitude;
-        this.historyObj.speed = location.speed;
-        this.historyObj.time = location.time;
-        this.historyObj.serviceProvider = location.serviceProvider;
-        this.historyObj.timestamp = location.timestamp;
-        this.historyObj.viewFlag = true;
+        // this.historyObj.child_Id = this.childObj.id;
+        // this.historyObj.longitude = location.longitude;
+        // this.historyObj.latitude = location.latitude;
+        // this.historyObj.speed = location.speed;
+        // this.historyObj.time = location.time;
+        // this.historyObj.serviceProvider = location.serviceProvider;
+        // this.historyObj.timestamp = location.timestamp;
+        // this.historyObj.viewFlag = true;
 
-        this.trackApi.addHistory(this.historyObj).subscribe(data => {
-          console.log(data);
-        });
+        // this.trackApi.addHistory(this.historyObj).subscribe(data => {
+        //   console.log(data);
+        // });
       })
 
 
